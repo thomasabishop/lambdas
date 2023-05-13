@@ -29,6 +29,8 @@ Resources:
           Properties:
             Path: /get-summary
             Method: get
+            Auth:
+              Authorizer: AWS_IAM
       Environment:
         Variables:
           SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
