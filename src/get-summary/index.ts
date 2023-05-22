@@ -19,7 +19,12 @@ export const handler = async (): Promise<APIGatewayProxyResult> => {
         let dataJson = (await data.json()) as string
         response = {
             statusCode: 200,
-            body: dataJson,
+            body: JSON.stringify(dataJson),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+            },
         }
     } catch (err: unknown) {
         console.error(err)
@@ -28,6 +33,11 @@ export const handler = async (): Promise<APIGatewayProxyResult> => {
             body: JSON.stringify({
                 message: err instanceof Error ? err.message : 'some error happened',
             }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': true,
+            },
         }
     }
 
