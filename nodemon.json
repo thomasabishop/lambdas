@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts",
   "ignore": [],
-  "exec": "sam build && sam local invoke GetSummaryFunction --event events/event.json --env-vars /home/thomas/repos/lambdas/code-metrics-lambda/env/local.env.json"
+  "exec": "sam build && sam local start-api --env-vars /home/thomas/repos/lambdas/code-metrics-lambda/env/local.env.json"
 }
