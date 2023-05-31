@@ -14,20 +14,20 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
-  GetSummaryFunction:
+  QueryWakatimeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/get-summary/
+      CodeUri: src/query-wakatime/
       Handler: index.handler
       Runtime: nodejs16.x
       Architectures:
         - x86_64
       MemorySize: 256
       Events:
-        GetSummary:
+        QueryWakatime:
           Type: Api
           Properties:
-            Path: /get-summary
+            Path: /query-wakatime
             Method: get
             Auth:
               Authorizer: AWS_IAM
@@ -58,12 +58,12 @@ Resources:
         Ref: ApplicationResourceGroup
       AutoConfigurationEnabled: "true"
 Outputs:
-  GetSummaryApi:
+  QueryWakatimeApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  GetSummaryFunction:
+  QueryWakatimeFunction:
     Description: Hello World Lambda Function ARN
-    Value: !GetAtt GetSummaryFunction.Arn
-  GetSummaryFunctionIamRole:
+    Value: !GetAtt QueryWakatimeFunction.Arn
+  QueryWakatimeFunctionIamRole:
     Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt GetSummaryFunctionRole.Arn
+    Value: !GetAtt QueryWakatimeFunctionRole.Arn
