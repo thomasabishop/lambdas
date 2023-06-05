@@ -24,10 +24,17 @@ Resources:
         - x86_64
       MemorySize: 256
       Events:
-        QueryWakatime:
+        MainMetrics:
           Type: Api
           Properties:
-            Path: /query-wakatime
+            Path: /query-wakatime/main-metrics
+            Method: get
+            Auth:
+              Authorizer: AWS_IAM
+        Durations:
+          Type: Api
+          Properties:
+            Path: /query-wakatime/durations
             Method: get
             Auth:
               Authorizer: AWS_IAM
