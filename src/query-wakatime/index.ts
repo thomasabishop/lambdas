@@ -67,7 +67,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             })),
             codingDurations: summaries.data?.map((day: any) => ({
                 date: day?.range?.text,
-                duration: day?.grand_total?.text,
+                duration: day?.grand_total?.decimal,
             })),
         }
 
