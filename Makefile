@@ -6,5 +6,6 @@ clean:
 build:
 	sam build
 
-start: 
-	npx nodemon
+start-api: 
+	sam build
+	sam local start-api --env-vars /home/thomas/repos/lambdas/code-metrics-lambda/env/local.env.json 
