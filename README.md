@@ -1,3 +1,3 @@
-# pocket-api-lambda
+# lambda-pocket-api
 
 ![](/src/query-pocket/diagram.png)
