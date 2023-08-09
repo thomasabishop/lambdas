@@ -10,6 +10,37 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
+  QueryWakatimeFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: lambda-execution-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+        - PolicyName: secrets-manager-access
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
   QueryWakatimeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -28,7 +59,7 @@ Resources:
         Variables:
           SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
           NODE_ENV: production
-          API_KEY:
+          WAKATIME_API_KEY:
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -36,27 +67,13 @@ Resources:
         Target: es2020
         EntryPoints:
           - index.ts
-
-  ApplicationResourceGroup:
-    Type: AWS::ResourceGroups::Group
-    Properties:
-      Name:
-        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
-      ResourceQuery:
-        Type: CLOUDFORMATION_STACK_1_0
-  ApplicationInsightsMonitoring:
-    Type: AWS::ApplicationInsights::Application
-    Properties:
-      ResourceGroupName:
-        Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: "true"
 Outputs:
   QueryWakatimeApi:
-    Description: API Gateway endpoint URL for Prod stage for Hello World function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Description: "API Gateway endpoint URL for Prod stage for Query Wakatime function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query-wakatime/"
   QueryWakatimeFunction:
-    Description: Hello World Lambda Function ARN
+    Description: "Query Lambda Function ARN"
     Value: !GetAtt QueryWakatimeFunction.Arn
   QueryWakatimeFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
+    Description: "IAM Role created for Query Wakatime function"
     Value: !GetAtt QueryWakatimeFunctionRole.Arn

@@ -10,9 +10,9 @@ const getApiKey = async (): Promise<string> => {
     if (process.env.NODE_ENV === "production") {
         const response = await secretsManager.getSecretValue({ SecretId: process.env.SECRET_ARN as string }).promise()
         const secretValues = JSON.parse(response.SecretString as string)
-        return secretValues.API_KEY
+        return secretValues.WAKTIME_API_KEY
     } else {
-        return process.env.API_KEY as string
+        return process.env.WAKATIME_API_KEY as string
     }
 }
 
