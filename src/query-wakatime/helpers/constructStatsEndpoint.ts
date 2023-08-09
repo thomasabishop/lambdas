@@ -34,7 +34,6 @@ const constructStatsEndpoint = (timePeriod?: string | undefined) => {
         if (fixedTimePeriods.includes(timePeriod)) {
             return `range=${timePeriod}`
         } else {
-            console.log(generateDateParameters(timePeriod))
             return generateDateParameters(timePeriod)
         }
     }
