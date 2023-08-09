@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  code-stats-lambda
+  code-metrics-lambda
 Globals:
   Function:
     Timeout: 20
@@ -44,6 +44,7 @@ Resources:
   QueryWakatimeFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Role: !GetAtt QueryWakatimeFunctionRole.Arn
       CodeUri: src/query-wakatime/
       Handler: index.handler
       Runtime: nodejs16.x
@@ -59,7 +60,7 @@ Resources:
         Variables:
           SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
           NODE_ENV: production
-          WAKATIME_API_KEY:
+          WAKATIME_API_KEY: ""
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
