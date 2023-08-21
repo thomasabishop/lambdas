@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  code-metrics-lambda
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 256
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  QueryWakatimeFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: lambda-execution-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+        - PolicyName: secrets-manager-access
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
+  QueryWakatimeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt QueryWakatimeFunctionRole.Arn
+      CodeUri: src/query-wakatime/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      Events:
+        QueryWakatimeApi:
+          Type: Api
+          Properties:
+            Path: /query-wakatime
+            Method: get
+      Environment:
+        Variables:
+          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
+          NODE_ENV: production
+          WAKATIME_API_KEY: ""
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        EntryPoints:
+          - index.ts
+Outputs:
+  QueryWakatimeApi:
+    Description: "API Gateway endpoint URL for Prod stage for Query Wakatime function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query-wakatime/"
+  QueryWakatimeFunction:
+    Description: "Query Lambda Function ARN"
+    Value: !GetAtt QueryWakatimeFunction.Arn
+  QueryWakatimeFunctionIamRole:
+    Description: "IAM Role created for Query Wakatime function"
+    Value: !GetAtt QueryWakatimeFunctionRole.Arn
