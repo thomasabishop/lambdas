@@ -1,3 +1,3 @@
 # lambda-pocket-api
 
-![](/src/query-pocket/diagram.png)
+![](/pocket-api/src/query-pocket/diagram.png)
