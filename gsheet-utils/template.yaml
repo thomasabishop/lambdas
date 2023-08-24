@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  update-google-sheet
+  gsheet-utils
 Globals:
   Function:
     Timeout: 3
     MemorySize: 128
 
 Resources:
-  UpdateGoogleSheetFunction:
+  UpdateSheetFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: update_google_sheet/
+      CodeUri: update_sheet/
       Handler: app.lambda_handler
       Runtime: python3.8
       Architectures:
@@ -20,16 +20,18 @@ Resources:
         HelloWorld:
           Type: Api
           Properties:
-            Path: /update_google_sheet
+            Path: /update_sheet
             Method: get
-
+      Environment:
+        Variables:
+          GOOGLE_CREDS: ""
 Outputs:
-  UpdateGoogleSheetApi:
-    Description: "API Gateway endpoint URL for Prod stage for UpdateGoogleSheet function"
+  UpdateSheetApi:
+    Description: "API Gateway endpoint URL for Prod stage for UpdateSheet function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/update-google-sheet/"
-  HelloWorldFunction:
-    Description: "UpdateGoogleSheet Lambda Function ARN"
-    Value: !GetAtt UpdateGoogleSheet.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for UpdateGoogleSheet function"
-    Value: !GetAtt UpdateGoogleSheetFunctionRole.Arn
+  UpdateSheetFunction:
+    Description: "UpdateSheet Lambda Function ARN"
+    Value: !GetAtt UpdateSheetFunction.Arn
+  UpdateSheetIamRole:
+    Description: "Implicit IAM Role created for UpdateSheet function"
+    Value: !GetAtt UpdateSheetFunctionRole.Arn
