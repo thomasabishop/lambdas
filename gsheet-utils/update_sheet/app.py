@@ -1,31 +1,38 @@
-import os
 import json
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from gspread.exceptions import SpreadsheetNotFound, APIError
+
+from helpers import client
+from helpers import edit_sheet
 
 
 def lambda_handler(event, context):
-    print(f"GOOGLE_CREDS: {os.environ['GOOGLE_CREDS']}")
-    # Load credentials from env var
-    creds_json = json.loads(os.environ["GOOGLE_CREDS"])
-    creds_json["private_key"] = creds_json["private_key"].replace("\\n", "\n")
+    try:
+        # Client for interacting with Google services:
+        sheets_client = client.create()
+        try:
+            # Retrieve sheet:
+            sheet = sheets_client.open("lambda test sheet").sheet1
+        except SpreadsheetNotFound:
+            return {
+                "statusCode": 404,
+                "body": json.dumps({"message": f"Sheet {sheet} not found."}),
+            }
 
-    # Use creds to create a client to interact with the Google Drive and Google Sheets API
-    scope = [
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive",
-    ]
+        # Attempt data insertion:
+        edit_sheet.insert_rows(sheet)
+        return {
+            "statusCode": 200,
+            "body": json.dumps({"message": f"Sheet {sheet} updated successfully"}),
+        }
 
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_json, scope)
-    client = gspread.authorize(creds)
+    except APIError as e:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": f"Network error: {e} updated"}),
+        }
 
-    # Open the sheet and update
-    sheet = client.open("lambda test sheet").sheet1
-
-    # Sample update: For the sake of simplicity, let's update A1 cell
-    sheet.update_cell(1, 1, "Updated from Lambda locally!")
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({"message": "Google Sheet updated locally!"}),
-    }
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": f"An error occurred: {e}"}),
+        }
