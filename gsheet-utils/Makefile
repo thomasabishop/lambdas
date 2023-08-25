@@ -7,7 +7,7 @@ build:
 	sam build
 
 start: 
-	make clean && make build && sam local invoke UpdateSheetFunction --event events/event.json --env-vars env.json
+	make build && sam local invoke UpdateSheetFunction --event events/event.json --env-vars env.json
 
 deploy: 
 	make build && sam deploy	
