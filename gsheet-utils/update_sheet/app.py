@@ -2,7 +2,15 @@ import json
 from gspread.exceptions import SpreadsheetNotFound, APIError
 
 from helpers import client
-from helpers import edit_sheet
+from helpers import update_articles
+
+
+dummy_data = [
+    ["1689023491", "Article Three", "Lorem ipsum...", "https://example.com"],
+    ["1688582410", "Article One", "Lorem ipsum...", "https://example.com"],
+    ["1688647447", "Article Two", "Lorem ipsum...", "https://example.com"],
+    ["1689023491", "Article Three", "Lorem ipsum...", "https://example.com"],
+]
 
 
 def lambda_handler(event, context):
@@ -19,7 +27,8 @@ def lambda_handler(event, context):
             }
 
         # Attempt data insertion:
-        edit_sheet.insert_rows(sheet)
+        update_articles.add_entries_to_sheet(sheet, dummy_data)
+
         return {
             "statusCode": 200,
             "body": json.dumps({"message": f"Sheet {sheet} updated successfully"}),
