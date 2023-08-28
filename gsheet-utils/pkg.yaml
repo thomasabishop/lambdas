@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'gsheet-utils
+
+  '
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 128
+Resources:
+  UpdateSheetFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName: lambda-execution-policy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: '*'
+      - PolicyName: secrets-manager-access
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - secretsmanager:GetSecretValue
+            Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
+    Metadata:
+      SamResourceId: UpdateSheetFunctionRole
+  UpdateSheetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://aws-sam-cli-managed-default-samclisourcebucket-xc8swn6xu4km/5b23f14e6faaa27e4b15cb831d80bd29
+      Role:
+        Fn::GetAtt:
+        - UpdateSheetFunctionRole
+        - Arn
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Architectures:
+      - x86_64
+      Events:
+        UpdateSheetApi:
+          Type: Api
+          Properties:
+            Path: /update_sheet
+            Method: post
+      Environment:
+        Variables:
+          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
+          PYTHON_ENV: production
+          GOOGLE_CREDS: ''
+    Metadata:
+      SamResourceId: UpdateSheetFunction
+Outputs:
+  UpdateSheetApi:
+    Description: API Gateway endpoint URL for Prod stage for UpdateSheet function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/update-sheet/
+  UpdateSheetFunction:
+    Description: UpdateSheet Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - UpdateSheetFunction
+      - Arn
+  UpdateSheetFunctionIamRole:
+    Description: IAM Role created for UpdateSheet function
+    Value:
+      Fn::GetAtt:
+      - UpdateSheetFunctionRole
+      - Arn
