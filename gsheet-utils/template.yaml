@@ -8,6 +8,39 @@ Globals:
     MemorySize: 128
 
 Resources:
+
+ UpdateSheetFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: lambda-execution-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+        - PolicyName: secrets-manager-access
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
+
   UpdateSheetFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -17,14 +50,17 @@ Resources:
       Architectures:
         - x86_64
       Events:
-        HelloWorld:
+        UpdateSheetApi:
           Type: Api
           Properties:
             Path: /update_sheet
             Method: post
       Environment:
         Variables:
+          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov 
+          PYTHON_ENV: "production"
           GOOGLE_CREDS: ""
+
 Outputs:
   UpdateSheetApi:
     Description: "API Gateway endpoint URL for Prod stage for UpdateSheet function"
@@ -32,6 +68,6 @@ Outputs:
   UpdateSheetFunction:
     Description: "UpdateSheet Lambda Function ARN"
     Value: !GetAtt UpdateSheetFunction.Arn
-  UpdateSheetIamRole:
-    Description: "Implicit IAM Role created for UpdateSheet function"
+  UpdateSheetFunctionIamRole:
+    Description: "IAM Role created for UpdateSheet function"
     Value: !GetAtt UpdateSheetFunctionRole.Arn
