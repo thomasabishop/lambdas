@@ -5,21 +5,21 @@ from helpers import client
 from helpers import update_articles
 
 
-dummy_data = [
-    ["1689023491", "Article Three", "Lorem ipsum...", "https://example.com"],
-    ["1688582410", "Article One", "Lorem ipsum...", "https://example.com"],
-    ["1688647447", "Article Two", "Lorem ipsum...", "https://example.com"],
-    ["1689023491", "Article Three", "Lorem ipsum...", "https://example.com"],
-]
-
-
 def lambda_handler(event, context):
     try:
+        body = json.loads(event.get("body", "{}"))
+        sheet_title = body.get("sheet_title")
+        sheet_data = body.get("sheet_data")
+
+        # Create list of lists from sheet_data JSON
+        entries = list(map(lambda d: list(d.values()), sheet_data))
+
         # Client for interacting with Google services:
         sheets_client = client.create()
         try:
             # Retrieve sheet:
-            sheet = sheets_client.open("lambda test sheet").sheet1
+            sheet = sheets_client.open(sheet_title).sheet1
+
         except SpreadsheetNotFound:
             return {
                 "statusCode": 404,
@@ -27,7 +27,7 @@ def lambda_handler(event, context):
             }
 
         # Attempt data insertion:
-        update_articles.add_entries_to_sheet(sheet, dummy_data)
+        update_articles.add_entries_to_sheet(sheet, entries)
 
         return {
             "statusCode": 200,
