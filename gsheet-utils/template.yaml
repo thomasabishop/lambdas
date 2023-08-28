@@ -6,10 +6,8 @@ Globals:
   Function:
     Timeout: 20
     MemorySize: 128
-
 Resources:
-
- UpdateSheetFunctionRole:
+  UpdateSheetFunctionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -40,11 +38,11 @@ Resources:
                 Action:
                   - secretsmanager:GetSecretValue
                 Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
-
   UpdateSheetFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: update_sheet/
+      Role: !GetAtt UpdateSheetFunctionRole.Arn
       Handler: app.lambda_handler
       Runtime: python3.8
       Architectures:
@@ -57,10 +55,9 @@ Resources:
             Method: post
       Environment:
         Variables:
-          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov 
+          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
           PYTHON_ENV: "production"
           GOOGLE_CREDS: ""
-
 Outputs:
   UpdateSheetApi:
     Description: "API Gateway endpoint URL for Prod stage for UpdateSheet function"
