@@ -21,14 +21,14 @@ Resources:
           Type: Api
           Properties:
             Path: /update_sheet
-            Method: get
+            Method: post
       Environment:
         Variables:
           GOOGLE_CREDS: ""
 Outputs:
   UpdateSheetApi:
     Description: "API Gateway endpoint URL for Prod stage for UpdateSheet function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/update-google-sheet/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/update-sheet/"
   UpdateSheetFunction:
     Description: "UpdateSheet Lambda Function ARN"
     Value: !GetAtt UpdateSheetFunction.Arn
