@@ -5,7 +5,8 @@ import datetime
 
 def update_entries(old, new):
     """Merge old and new data, removing dupes"""
-    combined = old + new
+    old_unix_date = list(map(lambda i: [date_to_timestamp(i[0])] + i[1:], old))
+    combined = old_unix_date + new
     seen = set()
     filter_func = lambda x: not (tuple(x) in seen or seen.add(tuple(x)))
     unique_combined = list(filter(filter_func, combined))
@@ -18,8 +19,8 @@ def sort_by_date(entries, date_index=0):
     return entries
 
 
-def convert_timestamp(timestamp):
-    """Convert unix timestamp to human readable"""
+def timestamp_to_date(timestamp):
+    """Convert Unix timestamp to human readable date"""
 
     if isinstance(timestamp, str):
         timestamp = int(timestamp)
@@ -29,12 +30,21 @@ def convert_timestamp(timestamp):
     return formatted_date
 
 
+def date_to_timestamp(date_str):
+    """Convert human readable date to Unix timestamp"""
+
+    date_object = datetime.datetime.strptime(date_str, "%d-%m-%Y")
+    timestamp = int(date_object.timestamp())
+
+    return timestamp
+
+
 def add_entries_to_sheet(sheet_ref, new_data):
     """Write updated data to sheet"""
     existing_entries = sheet_ref.get_all_values()
     entries_rows = existing_entries[0:]
     updated = update_entries(entries_rows, new_data)
     date_sorted = sort_by_date(updated)
-    readable_date = list(map(lambda i: [convert_timestamp(i[0])] + i[1:], date_sorted))
+    readable_date = list(map(lambda i: [timestamp_to_date(i[0])] + i[1:], date_sorted))
     sheet_ref.clear()
     sheet_ref.insert_rows(readable_date, 1)
