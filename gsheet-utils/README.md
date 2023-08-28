@@ -15,10 +15,11 @@ flowchart LR
 | --------------- | ------------ |
 | `/update-sheet` | POST         |
 
-### `update-sheet`
+## `update-sheet`
+
+### Example `body`
 
 ```json
-// Example body
 {
   "worksheet": "worksheet_name",
   "data": [
