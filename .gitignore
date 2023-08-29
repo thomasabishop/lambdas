@@ -210,3 +210,5 @@ $RECYCLE.BIN/
 env/
 
 env.json
+
+test-proj/

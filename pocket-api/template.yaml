@@ -41,7 +41,7 @@ Resources:
   QueryPocketFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/query-pocket/
+      CodeUri: query-pocket/
       Role: !GetAtt QueryPocketFunctionRole.Arn
       Handler: index.handler
       Runtime: nodejs16.x
