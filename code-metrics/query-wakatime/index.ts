@@ -35,7 +35,6 @@ export interface IQueryWakatimeResponse {
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     let response: APIGatewayProxyResult
     try {
-        console.log(JSON.stringify(event))
         const timePeriod = event.queryStringParameters?.timePeriod
         const apiKey = await getApiKey()
         const encodedApiKey = base64Encode(apiKey)

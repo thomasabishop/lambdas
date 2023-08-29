@@ -45,7 +45,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt QueryWakatimeFunctionRole.Arn
-      CodeUri: src/query-wakatime/
+      CodeUri: query-wakatime/
       Handler: index.handler
       Runtime: nodejs16.x
       Architectures:
