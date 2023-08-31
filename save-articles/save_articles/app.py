@@ -1,42 +1,40 @@
 import json
-
-# import requests
+from helpers import request
+from helpers import parse
 
 
 def lambda_handler(event, context):
-    """Sample pure Lambda function
-
-    Parameters
-    ----------
-    event: dict, required
-        API Gateway Lambda Proxy Input Format
-
-        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
-
-    context: object, required
-        Lambda Context runtime methods and attributes
-
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
-
-    Returns
-    ------
-    API Gateway Lambda Proxy Output Format: dict
-
-        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    """
-
-    # try:
-    #     ip = requests.get("http://checkip.amazonaws.com/")
-    # except requests.RequestException as e:
-    #     # Send some context about this error to Lambda Logs
-    #     print(e)
-
-    #     raise e
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "hello world",
-            # "location": ip.text.replace("\n", "")
-        }),
+    article_mappings = {
+        "general": "general_articles",
+        #  "technical": "technical_articles",
+        #  "gaby": "gaby_articles",
     }
+    parsed_articles = {}
+
+    try:
+        for article_type, worksheet in article_mappings.items():
+            response = request.get_articles(article_type)
+
+            if response:
+                articles_dict = response.get("data", {}).get("list", {})
+                parsed_articles[article_type] = parse.articles(articles_dict)
+            else:
+                print(f"Failed to get articles for category: {article_type}")
+
+        for article_type, articles in parsed_articles.items():
+            if articles:
+                request.post_articles(articles, worksheet)
+            else:
+                print(f"No articles to post for category: {article_type}")
+
+        return {
+            "statusCode": 200,
+            "body": "Articles successfully saved",
+        }
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {
+            "statusCode": 500,
+            "body": "Internal Server Error",
+        }
