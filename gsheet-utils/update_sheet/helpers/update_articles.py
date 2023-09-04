@@ -3,14 +3,24 @@ import datetime
 """Utils for updating a list of article entries in Google sheets"""
 
 
+# TODO: removal of dupes not working
+
+
+def remove_duplicate_entries(entries, unique_key_index):
+    unique_dict = {x[unique_key_index]: x for x in entries}
+    unique_entries = list(unique_dict.values())
+    return unique_entries
+
+
 def update_entries(old, new):
     """Merge old and new data, removing dupes"""
     old_unix_date = list(map(lambda i: [date_to_timestamp(i[0])] + i[1:], old))
     combined = old_unix_date + new
-    seen = set()
-    filter_func = lambda x: not (tuple(x) in seen or seen.add(tuple(x)))
-    unique_combined = list(filter(filter_func, combined))
-    return unique_combined
+    deduped = remove_duplicate_entries(combined, 0)
+    # seen = set()
+    # filter_func = lambda x: not (tuple(x) in seen or seen.add(tuple(x)))
+    # unique_combined = list(filter(filter_func, combined))
+    return deduped
 
 
 def sort_by_date(entries, date_index=0):
