@@ -27,7 +27,7 @@ def lambda_handler(event, context):
             }
 
         # Attempt data insertion:
-        update_articles.add_entries_to_sheet(worksheet, entries)
+        update_articles.update_sheet(worksheet, entries)
 
         return {
             "statusCode": 200,
