@@ -5,7 +5,7 @@ from helpers import auth
 from helpers import update_articles
 
 
-def lambda_handler(event, context):
+def handler(event, context):
     try:
         body = json.loads(event.get("body", "{}"))
         worksheet = body.get("worksheet")
