@@ -16,7 +16,7 @@ def date_sort(entries, date_index=0):
 
 
 def convert_timestamp(timestamp):
-    """Convert Unix timestamp to human readable date"""
+    """Convert Unix timestamp to readable format"""
 
     if isinstance(timestamp, str):
         timestamp = int(timestamp)
@@ -27,27 +27,16 @@ def convert_timestamp(timestamp):
 
 
 def collate_entries(sheet_ref, new_entries):
+    """Merge new entries with old, sort and sanitise"""
     processed_entries = date_sort(
         remove_duplicates(sheet_ref.get_all_values() + new_entries, 1)
     )
 
     return [[convert_timestamp(i[0])] + i[1:] for i in processed_entries]
 
-    # existing_entries = sheet_ref.get_all_values()
-    # merged_entries = existing_entries + new_data
-    # deduped = remove_duplicate_entries(merged_entries, 1)
-    # date_sorted = sort_by_date(deduped)
-    # date_readable =  [[timestamp_to_date(i[0])] + i[1:] for i in date_sorted]
-    # return date_readable
-
 
 def update_sheet(sheet_ref, new_entries):
     """Write updated data to sheet"""
-    # existing_entries = sheet_ref.get_all_values()
-    # merged_entries = existing_entries + new_data
-    # deduped = remove_duplicate_entries(merged_entries, 1)
-    # date_sorted = sort_by_date(deduped)
-    # readable_date = [[timestamp_to_date(i[0])] + i[1:] for i in date_sorted]
 
     entries = collate_entries(sheet_ref, new_entries)
     sheet_ref.clear()
