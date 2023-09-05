@@ -26,13 +26,29 @@ def timestamp_to_date(timestamp):
     return formatted_date
 
 
-def add_entries_to_sheet(sheet_ref, new_data):
+def collate_entries(sheet_ref, new_entries):
+    processed_entries = sort_by_date(
+        remove_duplicate_entries(sheet_ref.get_all_values() + new_entries, 1)
+    )
+
+    return [[timestamp_to_date(i[0])] + i[1:] for i in processed_entries]
+
+    # existing_entries = sheet_ref.get_all_values()
+    # merged_entries = existing_entries + new_data
+    # deduped = remove_duplicate_entries(merged_entries, 1)
+    # date_sorted = sort_by_date(deduped)
+    # date_readable =  [[timestamp_to_date(i[0])] + i[1:] for i in date_sorted]
+    # return date_readable
+
+
+def update_sheet(sheet_ref, new_entries):
     """Write updated data to sheet"""
-    existing_entries = sheet_ref.get_all_values()
-    merged_entries = existing_entries + new_data
-    deduped = remove_duplicate_entries(merged_entries, 1)
-    date_sorted = sort_by_date(deduped)
-    # learning exercise: convert this map into list comprehension
-    readable_date = list(map(lambda i: [timestamp_to_date(i[0])] + i[1:], date_sorted))
+    # existing_entries = sheet_ref.get_all_values()
+    # merged_entries = existing_entries + new_data
+    # deduped = remove_duplicate_entries(merged_entries, 1)
+    # date_sorted = sort_by_date(deduped)
+    # readable_date = [[timestamp_to_date(i[0])] + i[1:] for i in date_sorted]
+
+    entries = collate_entries(sheet_ref, new_entries)
     sheet_ref.clear()
-    sheet_ref.insert_rows(readable_date, 1)
+    sheet_ref.insert_rows(entries, 1)
