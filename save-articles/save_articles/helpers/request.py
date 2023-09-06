@@ -9,7 +9,6 @@ def get_articles(article_type):
     try:
         response = requests.get(POCKET_LAMBDA_ENDPOINT)
 
-        # Check if the request was successful
         if response.status_code == 200:
             return response.json()
         else:
