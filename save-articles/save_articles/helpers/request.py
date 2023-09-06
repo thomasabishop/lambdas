@@ -26,6 +26,7 @@ def get_articles(article_type):
 
 def post_articles(article_list, target_worksheet):
     """Save articles to Google Sheet"""
+
     GSHEETS_LAMBDA_ENDPOINT = os.environ.get("GSHEETS_LAMBDA_ENDPOINT")
 
     body = {"worksheet": target_worksheet, "data": article_list}
