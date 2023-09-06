@@ -1,10 +1,14 @@
 import requests
+import os
 from requests.exceptions import RequestException
 
 
 def get_articles(article_type):
     """Retrieve articles from Pocket API"""
-    POCKET_LAMBDA_ENDPOINT = f"https://r9ww4g9y2c.execute-api.eu-west-2.amazonaws.com/Prod/query-pocket/get-articles-by-tag?tag={article_type}"
+
+    POCKET_LAMBDA_ENDPOINT = os.environ.get("POCKET_LAMBDA_ENDPOINT").format(
+        article_type=article_type
+    )
 
     try:
         response = requests.get(POCKET_LAMBDA_ENDPOINT)
@@ -22,9 +26,7 @@ def get_articles(article_type):
 
 def post_articles(article_list, target_worksheet):
     """Save articles to Google Sheet"""
-    GSHEETS_LAMBDA_ENDPOINT = (
-        "https://klmp8lwc2j.execute-api.eu-west-2.amazonaws.com/Prod/update_sheet"
-    )
+    GSHEETS_LAMBDA_ENDPOINT = os.environ.get("GSHEETS_LAMBDA_ENDPOINT")
 
     body = {"worksheet": target_worksheet, "data": article_list}
 

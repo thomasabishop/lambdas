@@ -7,8 +7,7 @@ build:
 	sam build
 
 start: 
-	# make build && sam local start-api  
-	make build && sam local invoke SaveArticlesFunction 
+	make build && sam local invoke SaveArticlesFunction --env-vars env.json
 
 deploy: 
 	make build && sam deploy	
