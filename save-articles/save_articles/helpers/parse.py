@@ -1,7 +1,8 @@
-# time_added, given_title, excerpt, resolved_url
-
-
 def articles(articles_dict):
+    """
+    Parse articles returned from Pocket API and extract
+    properties I wish to save
+    """
     result = []
     for value in articles_dict.values():
         timestamp = value.get("time_added", "undefined")
