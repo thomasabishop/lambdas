@@ -1,32 +1,20 @@
-import json
 from helpers import request
 from helpers import parse
 
 
 def lambda_handler(event, context):
-    article_mappings = {
-        "general": "general_articles",
-        #  "technical": "technical_articles",
-        #  "gaby": "gaby_articles",
-    }
-    parsed_articles = {}
+    worksheets = [
+        {"pocket_endpoint": "general", "name": "general_articles"},
+        {"pocket_endpoint": "technical", "name": "technical_articles"},
+        {"pocket_endpoint": "gaby", "name": "gaby_articles"},
+    ]
 
     try:
-        for article_type, worksheet in article_mappings.items():
-            response = request.get_articles(article_type)
-
-            if response:
-                articles_dict = response.get("data", {}).get("list", {})
-                parsed_articles[article_type] = parse.articles(articles_dict)
-            else:
-                print(f"Failed to get articles for category: {article_type}")
-
-        for article_type, articles in parsed_articles.items():
-            if articles:
-                request.post_articles(articles, worksheet)
-            else:
-                print(f"No articles to post for category: {article_type}")
-
+        for worksheet in worksheets:
+            pocket_data = request.get_articles(worksheet["pocket_endpoint"])
+            articles = pocket_data["data"]["list"]  # returns a dictionary
+            parsed = parse.articles(articles)
+            request.post_articles(parsed, worksheet["name"])
         return {
             "statusCode": 200,
             "body": "Articles successfully saved",
