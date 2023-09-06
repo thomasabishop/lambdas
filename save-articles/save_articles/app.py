@@ -1,6 +1,5 @@
 from helpers import request
 from helpers import parse
-import os
 
 
 def handler(event, context):
