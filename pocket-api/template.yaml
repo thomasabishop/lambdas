@@ -30,14 +30,6 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
                 Resource: "*"
-        - PolicyName: secrets-manager-access
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - secretsmanager:GetSecretValue
-                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:pocket-api-credentials-wEvQMI
   QueryPocketFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -55,8 +47,6 @@ Resources:
             Method: get
       Environment:
         Variables:
-          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:pocket-api-credentials-wEvQMI
-          NODE_ENV: production
           POCKET_CREDENTIALS: ""
     Metadata:
       BuildMethod: esbuild
