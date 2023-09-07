@@ -30,14 +30,6 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
                 Resource: "*"
-        - PolicyName: secrets-manager-access
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - secretsmanager:GetSecretValue
-                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
   UpdateSheetFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -55,8 +47,6 @@ Resources:
             Method: post
       Environment:
         Variables:
-          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:google-creds-UMjrov
-          PYTHON_ENV: "production"
           GOOGLE_CREDS: ""
 Outputs:
   UpdateSheetApi:
