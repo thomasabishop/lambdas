@@ -8,7 +8,6 @@
     "license": "MIT",
     "dependencies": {
         "@types/node-fetch": "^2.6.3",
-        "aws-sdk": "^2.1372.0",
         "esbuild": "^0.14.14",
         "node-fetch": "^3.3.1"
     },
@@ -20,7 +19,6 @@
     },
     "devDependencies": {
         "@types/aws-lambda": "^8.10.92",
-        "@types/aws-sdk": "^2.7.0",
         "@types/jest": "^29.4.0",
         "@types/node": "^17.0.13",
         "@typescript-eslint/eslint-plugin": "^5.10.2",
