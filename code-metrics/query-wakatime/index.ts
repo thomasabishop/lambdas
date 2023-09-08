@@ -37,7 +37,9 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     try {
         const timePeriod = event.queryStringParameters?.timePeriod
         const apiKey = await getApiKey()
+        console.log(apiKey)
         const encodedApiKey = base64Encode(apiKey)
+        console.log("encoded: " + encodedApiKey)
         const init: RequestInit = {
             headers: {
                 Authorization: `Basic ${encodedApiKey}`,

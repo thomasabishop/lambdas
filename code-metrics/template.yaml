@@ -33,14 +33,6 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
                 Resource: "*"
-        - PolicyName: secrets-manager-access
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - secretsmanager:GetSecretValue
-                Resource: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
   QueryWakatimeFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -58,8 +50,6 @@ Resources:
             Method: get
       Environment:
         Variables:
-          SECRET_ARN: arn:aws:secretsmanager:eu-west-2:885135949562:secret:wakatime-api-key-X9oF3v
-          NODE_ENV: production
           WAKATIME_API_KEY: ""
     Metadata:
       BuildMethod: esbuild
