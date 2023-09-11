@@ -8,6 +8,7 @@ const dbConfig = {
     port: process.env.DB_PORT,
 }
 
+// eslint-disable-next-line no-unused-vars
 export const handler = async (event) => {
     let connection
     try {
