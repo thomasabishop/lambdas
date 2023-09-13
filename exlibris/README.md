@@ -1,6 +1,6 @@
 # exlibris
 
-> The backend for my reading log. Creates and interacts with MySQL database that stores book data.
+> CRUD operations for an SQL database that stores book data.
 
 ## Environment variables
 
@@ -14,80 +14,64 @@
 
 ## Local development
 
-### Docker
+Docker is used in local development to create a container named `ex-libris-db` running the MySQL database. The standard `mysql` image from the Docker registry is used.
 
-Docker is used in local development to create a local instance of the MySQL database. The standard `mysql` image from the Docker registry is used.
+This runs alongside the AWS Single Application Model (SAM) Docker container which handles the execution of the Node.js lambda and the local AWS Gateway API that triggers it. (This is generated automatically when you create a lambda via SAM.)
 
-This is utilised along side the AWS Single Application Model (SAM) which handles the execution of the Node.js lambda and the local API that triggers it.
+The database container and the SAM container communicate via a shared Docker network: `exlibris-network`.
 
-The Docker container responsible for SAM and its API is able to communicate with the Docker container running the database because they each have access to the same Docker network: `exlibris-network`.
+### Running the database
 
-#### Docker daemon (Arch Linux)
-
-```sh
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo systemctl status docker
-```
-
-#### Docker network
-
-##### Create network
+Ensure the Docker daemon is running via `systemd`:
 
 ```
- docker network create exlibris-network
+systemctl start docker
+systemctl enable docker
+systemctl status docker
 ```
 
-##### List running networks
+If the Docker network has not yet been created:
 
 ```
-docker network ls
-NETWORK ID     NAME               DRIVER    SCOPE
-e25c4b999ef0   exlibris-network   bridge    local
+docker network create exlibris-network
 ```
 
-#### Create and start the MySQL database container
-
-```
-docker run --name exlibris-db \
-           -e MYSQL_ROOT_PASSWORD=xxxx \
-           -e MYSQL_DATABASE=exlibris \
-           -e MYSQL_USER=xxxx \
-           -e MYSQL_PASSWORD=xxxx \
-           -p 3306:3306 \
-           -d mysql:5.7
-```
-
-#### Controlling the Docker container
+Start the MySQL database:
 
 ```
 docker start exlibris-db
-docker stop exlibris-db
 ```
 
-### List all containers
+### Start the AWS Gateway local API
 
 ```
-docker container ls
+make start
 ```
 
-### List running containers
+This executes the following command:
 
 ```
-docker ps
+sam build && sam local start-api
+  --docker-network exlibris-network
+  --env-vars /home/thomas/repos/lambdas/exlibris/env/local.env.json
 ```
 
-## MySQL
+Which:
 
-### Create the main table
+- compiles the lambda function
+- gives the SAM container access to the `exlibris-network`
+- injects database credentials as environment variables, enabling the database connection
 
-```sql
-CREATE TABLE `exlibris`.`books` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `genre` VARCHAR(45) NOT NULL,
-  `pub_year` VARCHAR(45) NOT NULL,
-  `date_read` VARCHAR(45) NOT NULL,
-  `author` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`));
+### Troubleshooting
+
+To check the network is running:
+
+```
+docker network ls
+```
+
+To check both contaners have access to the network (they will be listed under the `Containers` property of the returned JSON):
+
+```
+docker network inspect exlibris-network
 ```
