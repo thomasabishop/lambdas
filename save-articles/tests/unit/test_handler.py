@@ -1,13 +1,25 @@
+"""
+Tests should be run from the root of the project, e.g.: lambdas/save-articles
+Test command: pytest --cache-clear
+"""
+
+# Below is necessary for imports within app.hanlder to resolve correctly:
+import sys
+
+parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+sys.path.insert(0, parentdir)
+
+
 import json
+import pytest  # type: ignore
+from unittest.mock import patch
 
-import pytest
-
-from hello_world import app
+from app import handler  # type: ignore
 
 
 @pytest.fixture()
 def apigw_event():
-    """ Generates API GW Event"""
+    """Generates API Gateway Event"""
 
     return {
         "body": '{ "test": "body"}',
@@ -63,10 +75,23 @@ def apigw_event():
 
 
 def test_lambda_handler(apigw_event):
+    with patch("app.request.get_articles") as mock_get_articles, patch(
+        "app.parse.articles"
+    ) as mock_parse_articles, patch("app.request.post_articles") as mock_post_articles:
+        # Mock the return value from get_articles
+        mock_get_articles.return_value = {"data": {"list": "dummy_data"}}
 
-    ret = app.lambda_handler(apigw_event, "")
-    data = json.loads(ret["body"])
+        # Mock the return value from parse_articles
+        mock_parse_articles.return_value = "parsed_dummy_data"
 
-    assert ret["statusCode"] == 200
-    assert "message" in ret["body"]
-    assert data["message"] == "hello world"
+        # Mock the return value from post_articles
+        mock_post_articles.return_value = True
+
+        fake_context = ""
+
+        ret = handler(apigw_event, fake_context)
+
+        assert isinstance(ret, dict)
+        assert "statusCode" in ret
+        assert ret["statusCode"] == 200
+        assert ret["body"] == "Articles successfully saved"
