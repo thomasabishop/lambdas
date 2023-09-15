@@ -1,5 +1,6 @@
 from helpers import request
 from helpers import parse
+from helpers import get_articles
 
 
 def handler(event, context):
@@ -11,7 +12,8 @@ def handler(event, context):
 
     try:
         for worksheet in worksheets:
-            pocket_data = request.get_articles(worksheet["pocket_endpoint"])
+            pocket_data = get_articles(worksheet["pocket_endpoint"])
+            print(pocket_data)
             articles = pocket_data["data"]["list"]  # returns a dictionary
             parsed = parse.articles(articles)
             request.post_articles(parsed, worksheet["name"])
