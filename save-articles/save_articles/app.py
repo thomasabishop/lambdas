@@ -5,8 +5,8 @@ from helpers import get_articles
 
 def handler(event, context):
     worksheets = [
-        {"pocket_endpoint": "general", "name": "general_articles"},
-        {"pocket_endpoint": "technical", "name": "technical_articles"},
+        # {"pocket_endpoint": "general", "name": "general_articles"},
+        # {"pocket_endpoint": "technical", "name": "technical_articles"},
         {"pocket_endpoint": "gaby", "name": "gaby_articles"},
     ]
 
