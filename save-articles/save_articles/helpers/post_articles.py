@@ -1,5 +1,4 @@
-import requests
-import os
+import requests, os
 
 
 def post_articles(article_list, target_worksheet):

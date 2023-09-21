@@ -75,9 +75,9 @@ def apigw_event():
 
 
 def test_lambda_handler(apigw_event):
-    with patch("app.request.get_articles") as mock_get_articles, patch(
-        "app.parse.articles"
-    ) as mock_parse_articles, patch("app.request.post_articles") as mock_post_articles:
+    with patch("app.get_articles") as mock_get_articles, patch(
+        "app.parse_articles"
+    ) as mock_parse_articles, patch("app.post_articles") as mock_post_articles:
         # Mock the return value from get_articles
         mock_get_articles.return_value = {"data": {"list": "dummy_data"}}
 

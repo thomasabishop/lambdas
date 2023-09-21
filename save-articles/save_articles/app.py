@@ -1,6 +1,4 @@
-from helpers import request
-from helpers import parse
-from helpers import get_articles
+from helpers import get_articles, post_articles, parse_articles
 
 
 def handler(event, context):
@@ -13,10 +11,9 @@ def handler(event, context):
     try:
         for worksheet in worksheets:
             pocket_data = get_articles(worksheet["pocket_endpoint"])
-            print(pocket_data)
             articles = pocket_data["data"]["list"]  # returns a dictionary
-            parsed = parse.articles(articles)
-            request.post_articles(parsed, worksheet["name"])
+            parsed = parse_articles(articles)
+            post_articles(parsed, worksheet["name"])
         return {
             "statusCode": 200,
             "body": "Articles successfully saved",

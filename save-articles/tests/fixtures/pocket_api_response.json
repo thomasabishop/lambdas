@@ -1,0 +1,63 @@
+{
+  "data": {
+    "status": 1,
+    "complete": 1,
+    "list": {
+      "111": {
+        "item_id": "3797621824",
+        "resolved_id": "3797621824",
+        "given_url": "https://www.xmodtwo.com/p/do-we-live-in-a-society-without-a",
+        "given_title": "Do we live in a society without a counterculture?",
+        "favorite": "1",
+        "status": "1",
+        "time_added": "1688582410",
+        "time_updated": "1688591702",
+        "time_read": "1688591702",
+        "time_favorited": "1688582410",
+        "sort_id": 4,
+        "resolved_title": "Do we live in a society without a counterculture?",
+        "resolved_url": "https://www.xmodtwo.com/p/do-we-live-in-a-society-without-a",
+        "excerpt": "It doesn’t seem true at first. Even though you could argue that mainstream culture is full of imitation, it's not necessarily new.",
+        "is_article": "1",
+        "is_index": "0",
+        "has_video": "0",
+        "has_image": "1",
+        "word_count": "1328",
+        "lang": "en",
+        "time_to_read": 6,
+        "top_image_url": "https://substackcdn.com/image/fetch/w_1200,h_600,c_limit,f_jpg,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fed3f4a3b-6cc3-4c7c-b875-8ec7f5c7134f_1024x674.webp",
+        "listen_duration_estimate": 514
+      },
+      "222": {
+        "item_id": "3829196293",
+        "resolved_id": "3829196293",
+        "given_url": "https://www.alexmurrell.co.uk/articles/the-age-of-average",
+        "given_title": "The age of average",
+        "favorite": "0",
+        "status": "1",
+        "time_added": "1688582413",
+        "time_updated": "1688647447",
+        "time_read": "1688647442",
+        "time_favorited": "0",
+        "sort_id": 3,
+        "resolved_title": "The age of average",
+        "resolved_url": "https://www.alexmurrell.co.uk/articles/the-age-of-average",
+        "excerpt": "In the early 1990s, two Russian artists named Vitaly Komar and Alexander Melamid took the unusual step of hiring a market research firm. Their brief was simple. Understand what Americans desire most in a work of art. Over 11 days the researchers at Marttila & Kiley Inc.",
+        "is_article": "0",
+        "is_index": "0",
+        "has_video": "0",
+        "has_image": "1",
+        "word_count": "6062",
+        "lang": "en",
+        "time_to_read": 28,
+        "top_image_url": "http://static1.squarespace.com/static/5e13762b05aeab4478a071d5/t/64162cd8f4e6564d39790f54/1679174899951/Most+Wanted.jpg?format=1500w",
+        "listen_duration_estimate": 2347
+      }
+    },
+    "error": null,
+    "search_meta": {
+      "search_type": "normal"
+    },
+    "since": 1695068217
+  }
+}
