@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { getPocketCredentials } from "./helpers/getPocketCredentials"
-import fetch, { RequestInit, Response } from "node-fetch"
+import axios, { AxiosResponse } from "axios"
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     let response: APIGatewayProxyResult
@@ -22,21 +22,16 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             tag: tag,
         }
 
-        const options: RequestInit = {
-            method: "POST",
+        const axiosResponse: AxiosResponse = await axios.post(endpoint, requestBody, {
             headers: {
                 "Content-Type": "application/json; charset=UTF8",
             },
-            body: JSON.stringify(requestBody),
-        }
-
-        const request: Response = await fetch(endpoint, options)
-        const requestJson: any = await request.json()
+        })
 
         response = {
             statusCode: 200,
             body: JSON.stringify({
-                data: requestJson,
+                data: axiosResponse.data,
             }),
             headers: responseHeaders,
         }
