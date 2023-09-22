@@ -26,6 +26,7 @@ Resources:
         Variables:
           GSHEETS_LAMBDA_ENDPOINT: ""
           POCKET_LAMBDA_ENDPOINT: ""
+          GOOGLE_CREDS: ""
 Outputs:
   SaveArticlesFunction:
     Description: "Save Articles Lambda Function ARN"
