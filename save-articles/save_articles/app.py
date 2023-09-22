@@ -1,4 +1,4 @@
-from helpers import get_articles, post_articles, parse_articles
+from helpers import get_articles, post_articles, parse_articles, get_credentials
 
 
 def handler(event, context):
@@ -11,12 +11,14 @@ def handler(event, context):
     try:
         for worksheet in worksheets:
             pocket_data = get_articles(worksheet["pocket_endpoint"])
-            articles = pocket_data["data"]["list"]  # returns a dictionary
-            parsed = parse_articles(articles)
-            post_articles(parsed, worksheet["name"])
+            # articles = pocket_data["data"]["list"]  # returns a dictionary
+            # parsed = parse_articles(articles)
+            articles = parse_articles(pocket_data)
+            # post_articles(parsed, worksheet["name"])
+
         return {
             "statusCode": 200,
-            "body": "Articles successfully saved",
+            "body": articles,
         }
 
     except Exception as e:
