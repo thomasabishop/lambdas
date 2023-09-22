@@ -34,12 +34,12 @@ def parse_articles(pocket_data: Dict[str, Any]) -> List[ArticleInfo]:
             raise ValueError("No articles to parse")
 
         parsed = []
-        for value in articles_dict.values():
+        for article in articles_dict.values():
             parsed.append(
                 {
-                    "timestamp": value.get("time_added", "undefined"),
-                    "article_title": value.get("given_title", "undefined"),
-                    "link": value.get("resolved_url", "undefined"),
+                    "timestamp": article.get("time_added", "undefined"),
+                    "article_title": article.get("given_title", "undefined"),
+                    "link": article.get("resolved_url", "undefined"),
                 }
             )
         return parsed
