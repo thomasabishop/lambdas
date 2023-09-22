@@ -22,16 +22,9 @@ def test_exception_no_endpoint():
     with pytest.raises(ValueError) as excinfo:  # Watch for the ValueError
         get_articles("some_type")
 
-    # with caplog.at_level(logging.ERROR):
-    #     result = get_articles("some_type")
-
     assert "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set" in str(
         excinfo.value
     )
-    # assert (
-    #     "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set" in caplog.text
-    # )
-    # assert result is None
 
 
 # Test all possible Request exceptions through parameterization
