@@ -11,13 +11,13 @@ def get_articles(article_type: str) -> Optional[Dict[str, Any]]:
     POCKET_LAMBDA_ENDPOINT = os.environ.get("POCKET_LAMBDA_ENDPOINT")
 
     if POCKET_LAMBDA_ENDPOINT is None:
-        logging.error("Error: POCKET_LAMBDA_ENDPOINT environment variable is not set")
-        return None
-    else:
-        # Interpolate the article_type into the Pocket request URL
-        endpoint = POCKET_LAMBDA_ENDPOINT.format(article_type=article_type)
+        raise ValueError(
+            "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set"
+        )
 
     try:
+        # Interpolate the article_type into the Pocket request URL
+        endpoint = POCKET_LAMBDA_ENDPOINT.format(article_type=article_type)
         response = requests.get(endpoint)
         response.raise_for_status()
         return response.json()

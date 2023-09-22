@@ -12,20 +12,26 @@ sys.path.insert(0, parentdir)
 from helpers import get_articles
 
 
-def test_exception_no_endpoint(caplog):
+def test_exception_no_endpoint():
     """
-    It should log an error and return None if POCKET_LAMBDA_ENDPOINT is not set
+    It should log an error and raise ValueException if POCKET_LAMBDA_ENDPOINT is not set
     """
 
     os.environ.pop("POCKET_LAMBDA_ENDPOINT", None)  # Remove env variable if it exists
 
-    with caplog.at_level(logging.ERROR):
-        result = get_articles("some_type")
+    with pytest.raises(ValueError) as excinfo:  # Watch for the ValueError
+        get_articles("some_type")
 
-    assert (
-        "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set" in caplog.text
+    # with caplog.at_level(logging.ERROR):
+    #     result = get_articles("some_type")
+
+    assert "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set" in str(
+        excinfo.value
     )
-    assert result is None
+    # assert (
+    #     "Error: POCKET_LAMBDA_ENDPOINT environment variable is not set" in caplog.text
+    # )
+    # assert result is None
 
 
 # Test all possible Request exceptions through parameterization
