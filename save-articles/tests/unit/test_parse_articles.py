@@ -41,7 +41,7 @@ def test_extract_articles_empty(caplog):
     assert "An error occurred" in caplog.text
 
 
-def test_extract_articles_None(caplog):
+def test_extract_articles_none(caplog):
     """
     It should return an empty dictionary if None is passed to the function
     """
@@ -76,6 +76,10 @@ def test_parse_articles_success():
 
 
 def test_parse_articles_error(caplog):
+    """
+    If no articles to parse, it should return an empty list
+    """
+
     with patch("helpers.extract_articles", return_value={}):
         result = parse_articles({})
     assert result == []
