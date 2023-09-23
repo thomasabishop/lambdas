@@ -40,7 +40,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         response = {
             statusCode: 500,
             body: JSON.stringify({
-                message: err instanceof Error ? err.message : "some error happened",
+                message: err instanceof Error ? err.message : "An error occurred",
             }),
             headers: responseHeaders,
         }

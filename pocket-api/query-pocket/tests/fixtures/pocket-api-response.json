@@ -1,0 +1,37 @@
+{
+    "status": 1,
+    "complete": 1,
+    "list": {
+        "3938639184": {
+            "item_id": "3938639184",
+            "resolved_id": "3938592578",
+            "given_url": "https://www.bbc.co.uk/news/newsbeat-66842873",
+            "given_title": "Final Fantasy 7 Rebirth: Reaction to demo as Tokyo Game Show starts - BBC N",
+            "favorite": "0",
+            "status": "0",
+            "time_added": "1695387846",
+            "time_updated": "1695387852",
+            "time_read": "0",
+            "time_favorited": "0",
+            "sort_id": 0,
+            "resolved_title": "Final Fantasy 7 Rebirth: Reaction to demo as Tokyo Game Show starts",
+            "resolved_url": "https://www.bbc.com/news/newsbeat-66842873",
+            "excerpt": "Tokyo Game Show has begun, and fans will have their first chance to play Final Fantasy 7 Rebirth. Developers Square Enix are launching a demo of the long-awaited follow-up to 2020's FF7 Remake at the annual convention held in Chiba, Japan.",
+            "is_article": "1",
+            "is_index": "0",
+            "has_video": "0",
+            "has_image": "0",
+            "word_count": "1105",
+            "lang": "en",
+            "time_to_read": 5,
+            "amp_url": "https://www.bbc.com/news/newsbeat-66842873.amp",
+            "top_image_url": "https://ichef.bbci.co.uk/news/1024/branded_news/9A46/production/_131149493_02_ff7rebith_0915_ss_fix.png",
+            "domain_metadata": {
+                "name": "BBC",
+                "logo": "https://logo.clearbit.com/bbc.com?size=800",
+                "greyscale_logo": "https://logo.clearbit.com/bbc.com?size=800&greyscale=true"
+            },
+            "listen_duration_estimate": 428
+        }
+    }
+}
