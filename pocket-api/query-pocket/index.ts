@@ -1,17 +1,17 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda"
 import { getPocketCredentials } from "./helpers/getPocketCredentials"
 import axios, { AxiosResponse } from "axios"
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    let response: APIGatewayProxyResult
     const responseHeaders = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
     }
 
-    const endpoint = `https://getpocket.com/v3/get`
-
     try {
+        let response: APIGatewayProxyResult
+        const endpoint = `https://getpocket.com/v3/get`
+
         const { accessToken, consumerKey } = await getPocketCredentials()
         const tag = event.queryStringParameters?.tag
 
@@ -35,9 +35,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             }),
             headers: responseHeaders,
         }
+        return response
     } catch (err: unknown) {
         console.error(err)
-        response = {
+        return {
             statusCode: 500,
             body: JSON.stringify({
                 message: err instanceof Error ? err.message : "An error occurred",
@@ -45,6 +46,4 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             headers: responseHeaders,
         }
     }
-
-    return response
 }
