@@ -2,14 +2,7 @@
 
 Return saved [Pocket](https://getpocket.com) articles by tag.
 
-```mermaid
-%%{init: {'theme':'default'}}%%
-flowchart LR
-    A[pocket-api] --> |GET| B["/query-pocket"]
-    B --> |triggers| C("AWS Lambda")
-    C <--> |fetch Pocket credentials| E[AWS SecretsManager]
-    C --> |calls| F[Pocket API]
-```
+![](./media/architecture-diagram.png)
 
 | Endpoint        | Request type |
 | --------------- | ------------ |
@@ -22,3 +15,7 @@ flowchart LR
 | Parameter | Values                                    |
 | --------- | ----------------------------------------- |
 | `tag`     | `website`, `general`, `technical`, `gaby` |
+
+### TODO
+
+- [ ] Add unit test for when non-existent tag is passed.
