@@ -7,7 +7,7 @@ build:
 	sam build
 
 start: 
-	make build && sam local start-api 
+	make build && sam local start-api --env-vars /home/thomas/repos/lambdas/activities/env/local.env.json
 
 deploy: 
 	make build && sam deploy	

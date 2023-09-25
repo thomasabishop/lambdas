@@ -21,6 +21,10 @@ Resources:
           Properties:
             Path: /activities/time-entries
             Method: get
+      Environment:
+        Variables:
+          TOGGL_API_KEY: ""
+          WORKSPACE_ID: ""
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
