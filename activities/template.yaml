@@ -24,7 +24,7 @@ Resources:
       Environment:
         Variables:
           TOGGL_API_KEY: ""
-          WORKSPACE_ID: ""
+          TOGGL_WORKSPACE_ID: ""
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
