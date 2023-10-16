@@ -2,7 +2,7 @@ import { formatDate } from "./formatDate"
 
 const getDateRange = (period: string, fromDate?: Date): string | null => {
     const now = fromDate ? new Date(fromDate) : new Date()
-    let startDate = new Date(now)
+    const startDate = new Date(now)
 
     switch (period) {
         case "last seven days":

@@ -27,4 +27,6 @@ describe("getDateRange", () => {
         const expected = "start_date=2022-09-25&end_date=2023-09-25"
         expect(result).toEqual(expected)
     })
+
+    // TODO: Mock actual date to test when specific fromDate is not provided
 })
