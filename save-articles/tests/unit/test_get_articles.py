@@ -12,7 +12,7 @@ sys.path.insert(0, parentdir)
 from helpers import get_articles
 
 
-def test_exception_no_endpoint():
+def test_failure_no_endpoint():
     """
     It should log an error and raise ValueException if POCKET_LAMBDA_ENDPOINT is not set
     """
@@ -48,7 +48,7 @@ def setup_function():
         (ConnectionError, "Connection Error occurred: "),
     ],
 )
-def test_exceptions(caplog, setup_function, exception_type, log_message):
+def test_failure_exceptions(caplog, setup_function, exception_type, log_message):
     with patch("requests.get", side_effect=exception_type("Some error")):
         result = get_articles("some_type")
 

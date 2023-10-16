@@ -1,20 +1,23 @@
 import sys, os, logging, json
 from pytest import raises
+from unittest.mock import patch, Mock
+from oauth2client.service_account import ServiceAccountCredentials  # type: ignore
+
 
 parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
-from helpers import get_credentials
+from helpers import get_google_credentials
 
 
-def test_get_credentials():
+def test_get_google_credentials_failure_missing_env_var():
     """
-    It should log an error and raise ValueException if POCKET_LAMBDA_ENDPOINT is not set
+    Should log an error and raise ValueException if POCKET_LAMBDA_ENDPOINT is not set
     """
 
     os.environ.pop("GOOGLE_CREDS", None)  # Remove env variable if it exists
 
     with raises(ValueError) as excinfo:  # Watch for the ValueError
-        get_credentials()
+        get_google_credentials()
 
     assert "Error: GOOGLE_CREDS environment variable is not set" in str(excinfo.value)

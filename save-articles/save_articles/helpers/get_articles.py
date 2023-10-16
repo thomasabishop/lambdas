@@ -5,7 +5,7 @@ from requests.exceptions import RequestException, HTTPError, Timeout, Connection
 from typing import Dict, Any, Optional
 
 
-def get_articles(article_type: str) -> Optional[Dict[str, Any]]:
+def main(article_type: str) -> Optional[Dict[str, Any]]:
     """Retrieve articles from Pocket API"""
 
     POCKET_LAMBDA_ENDPOINT = os.environ.get("POCKET_LAMBDA_ENDPOINT")
