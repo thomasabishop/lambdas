@@ -1,20 +1,27 @@
 import { formatDate } from "./formatDate"
 
-const getDateRange = (period: string, fromDate?: Date): string | null => {
+export enum DateRange {
+    Week = "week",
+    Month = "month",
+    SixMonths = "six_months",
+    Year = "last_year",
+}
+
+const getDateRange = (period: DateRange, fromDate?: Date): string | null => {
     const now = fromDate ? new Date(fromDate) : new Date()
     const startDate = new Date(now)
 
     switch (period) {
-        case "last seven days":
+        case DateRange.Week:
             startDate.setDate(now.getDate() - 7)
             break
-        case "last month":
+        case DateRange.Month:
             startDate.setMonth(now.getMonth() - 1)
             break
-        case "last six months":
+        case DateRange.SixMonths:
             startDate.setMonth(now.getMonth() - 6)
             break
-        case "last year":
+        case DateRange.Year:
             startDate.setFullYear(now.getFullYear() - 1)
             break
         default:

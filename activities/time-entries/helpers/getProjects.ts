@@ -6,12 +6,10 @@ interface IProject {
     [key: string]: unknown
 }
 
-type TProjectMap = Record<IProject["id"], IProject["name"]>
+export type TProjectMap = Record<IProject["id"], IProject["name"]>
 
-const getProjects = async (): Promise<TProjectMap> => {
-    const workspace = process.env.TOGGL_WORKSPACE_ID
-    const togglClient = new TogglClient()
-    const projects: IProject[] = await togglClient.get(`workspaces/${workspace}/projects`)
+const getProjects = async (workspaceId: string, togglClient: TogglClient): Promise<TProjectMap> => {
+    const projects: IProject[] = await togglClient.get(`workspaces/${workspaceId}/projects`)
     return parseProjects(projects)
 }
 

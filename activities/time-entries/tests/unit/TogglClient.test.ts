@@ -30,13 +30,21 @@ describe("ToggleClient", () => {
             )
         })
         it("should return an error if the request fails", async () => {
-            jest.spyOn(console, "error").mockImplementation(() => {})
+            const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {})
+
             mockedAxios.get.mockRejectedValue(new Error("error details"))
+
             const togglClient = new TogglClient()
-            const response = await togglClient.get("workspaces/123/projects")
-            expect(response).toEqual(undefined)
-            expect(console.error).toHaveBeenCalledWith(
-                "An error occured whilst fetching data from the Toggl API: Error: error details",
+
+            try {
+                await togglClient.get("workspaces/123/projects")
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    expect(error.message).toEqual("error details")
+                }
+            }
+            expect(consoleSpy).toHaveBeenCalledWith(
+                "An error occurred whilst fetching data from the Toggl API. Error: error details",
             )
         })
     })
