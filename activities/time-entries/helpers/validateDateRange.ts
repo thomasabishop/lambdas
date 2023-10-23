@@ -5,12 +5,10 @@ const isValidDateRange = (dateRange: string | undefined): dateRange is DateRange
 }
 
 const validateDateRange = (dateRange: string | undefined): DateRange | undefined => {
-    try {
-        if (isValidDateRange(dateRange)) {
-            return dateRange
-        }
-    } catch (error) {
-        throw new Error("Invalid date range provided")
+    if (isValidDateRange(dateRange)) {
+        return dateRange
+    } else {
+        console.error("Invalid date range provided")
     }
 }
 
