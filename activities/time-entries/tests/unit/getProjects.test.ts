@@ -1,10 +1,10 @@
 /// <reference types="@types/jest" />
 import { expect, describe, it } from "@jest/globals"
 import rawProjectData from "../fixtures/toggl_raw_projects.json"
-import { getProjects } from "../../helpers/getProjects"
-import { TogglClient } from "../../helpers/TogglClient"
+import { getProjects } from "../../lib/getProjects"
+import { TogglClient } from "../../lib/TogglClient"
 
-jest.mock("../../helpers/TogglClient", () => {
+jest.mock("../../lib/TogglClient", () => {
     return {
         TogglClient: jest.fn().mockImplementation(() => {
             return {

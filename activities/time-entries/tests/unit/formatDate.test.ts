@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals"
-import { formatDate } from "../../helpers/formatDate"
+import { formatDate } from "../../lib/formatDate"
 
 describe("formatDate", () => {
     it("should correctly format string Date object as param", () => {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /// <reference types="@types/jest" />
-import { TogglClient } from "./../../helpers/TogglClient"
+import { TogglClient } from "../../lib/TogglClient"
 import { expect, describe, it } from "@jest/globals"
 import axios from "axios"
 

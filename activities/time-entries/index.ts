@@ -1,9 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import { TogglClient } from "./helpers/TogglClient"
-import { getProjects } from "./helpers/getProjects"
-import { getTimeEntries } from "./helpers/getTimeEntries"
-import { DateRange } from "./helpers/getDateRange"
-import { validateDateRange } from "./helpers/validateDateRange"
+import { TogglClient } from "./lib/TogglClient"
+import { getProjects } from "./lib/getProjects"
+import { getTimeEntries } from "./lib/getTimeEntries"
+import { DateRange } from "./lib/getDateRange"
+import { validateDateRange } from "./lib/validateDateRange"
 const togglClient = new TogglClient()
 const workspaceId = process.env.TOGGL_WORKSPACE_ID as string
 

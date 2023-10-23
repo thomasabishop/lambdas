@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals"
-import { DateRange, getDateRange } from "../../helpers/getDateRange"
+import { DateRange, getDateRange } from "../../lib/getDateRange"
 
 describe("getDateRange", () => {
     const startDate = new Date("2023-09-25")

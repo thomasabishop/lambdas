@@ -1,4 +1,4 @@
-import { base64Encode } from "../../helpers/base64Encode"
+import { base64Encode } from "../../lib/base64Encode"
 import { expect, describe, it } from "@jest/globals"
 
 describe("base64encode", () => {

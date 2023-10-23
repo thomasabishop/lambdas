@@ -1,5 +1,5 @@
 import { expect, describe, it } from "@jest/globals"
-import { validateDateRange } from "../../helpers/validateDateRange"
+import { validateDateRange } from "../../lib/validateDateRange"
 
 describe("validateDateRange", () => {
     it("should return the date range passed as argument if it is valid", () => {
