@@ -23,14 +23,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         }
     } catch (error: unknown) {
         console.log(error)
-        if (error instanceof Error && error.message.includes("No data for the selected date range")) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({
-                    message: error.message,
-                }),
-            }
-        }
         return {
             statusCode: 500,
             body: JSON.stringify({

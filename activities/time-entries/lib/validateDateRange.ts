@@ -9,6 +9,7 @@ const validateDateRange = (dateRange: string | undefined): DateRange | undefined
         return dateRange
     } else {
         console.error("Invalid date range provided")
+        throw Error("Invalid date range provided")
     }
 }
 

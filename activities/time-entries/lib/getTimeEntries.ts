@@ -3,7 +3,6 @@ import { TogglClient } from "./TogglClient"
 import { getDateRange } from "./getDateRange"
 import { formatDate } from "./formatDate"
 import { formatTime } from "./formatTime"
-import { AxiosError } from "axios"
 import { DateRange } from "./getDateRange"
 
 interface ITogglTimeEntry {
@@ -30,8 +29,6 @@ const getTimeEntries = async (
         const timeEntries: ITogglTimeEntry[] = await togglClient.get(`me/time_entries?${formattedDateRange}`)
 
         if (timeEntries) {
-            console.log("im called second")
-
             return timeEntries.map((entry: ITogglTimeEntry) => ({
                 project: projects[entry.project_id],
                 date: formatDate(entry.at),
@@ -41,11 +38,6 @@ const getTimeEntries = async (
         }
     } catch (error: unknown) {
         console.error(error)
-        if (error instanceof AxiosError && error.response && error.response.data.includes("must not be earlier than")) {
-            throw new Error("No data for the selected date range")
-        } else {
-            throw error
-        }
     }
 }
 
