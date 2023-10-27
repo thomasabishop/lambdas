@@ -22,11 +22,12 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             }),
         }
     } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
         console.log(error)
         return {
             statusCode: 500,
             body: JSON.stringify({
-                message: error,
+                message: errorMessage,
             }),
         }
     }

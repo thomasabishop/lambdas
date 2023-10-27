@@ -60,8 +60,7 @@ describe("handler", () => {
         mockHandlerEvent.queryStringParameters = queryParams
 
         const result: APIGatewayProxyResult = await handler(mockHandlerEvent as APIGatewayProxyEvent)
-
         expect(result.statusCode).toEqual(500)
-        //        expect(JSON.parse(result.body).message).toBe("Invalid date range provided")
+        expect(JSON.parse(result.body).message).toBe("Invalid date range provided")
     })
 })
