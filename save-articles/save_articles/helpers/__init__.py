@@ -8,7 +8,6 @@ from helpers.process_articles import (
 )
 from helpers.update_worksheet import (
     get_google_credentials,
-    main as process_articles,
 )
 
 

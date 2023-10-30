@@ -116,15 +116,10 @@ def test_parse_articles_failure_missing_properties(caplog):
     assert len(result) == 2  # should not be 3 because of missing property
 
 
-# def test_main_success():
-#     result = process_articles(mock_pocket_api_response)
-#     assert result == [
-#         ["11-09-2023", "Article One", "https://www.article1.com"],
-#         ["05-07-2023", "Article Two", "https://www.article2.com"],
-#     ]
-
-
-# def test_main_failure_propagation(caplog):
-#     result = process_articles({})
-#     assert "No articles to parse" in caplog.text
-#     assert result is None
+def test_main_success():
+    result = process_articles(mock_pocket_api_response)
+    print(result)
+    assert result == [
+        ["11-09-2023", "Article One", "https://www.article1.com"],
+        ["05-07-2023", "Article Two", "https://www.article2.com"],
+    ]
