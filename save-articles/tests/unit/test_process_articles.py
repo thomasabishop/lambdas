@@ -118,7 +118,6 @@ def test_parse_articles_failure_missing_properties(caplog):
 
 def test_main_success():
     result = process_articles(mock_pocket_api_response)
-    print(result)
     assert result == [
         ["11-09-2023", "Article One", "https://www.article1.com"],
         ["05-07-2023", "Article Two", "https://www.article2.com"],
