@@ -1,5 +1,7 @@
-from helpers import request
-from helpers import parse
+import logging
+from helpers.process_articles import main as process_articles
+from helpers.get_articles import main as get_articles
+from helpers.update_worksheet import main as update_worksheet
 
 
 def handler(event, context):
@@ -9,20 +11,32 @@ def handler(event, context):
         {"pocket_endpoint": "gaby", "name": "gaby_articles"},
     ]
 
-    try:
-        for worksheet in worksheets:
-            pocket_data = request.get_articles(worksheet["pocket_endpoint"])
-            articles = pocket_data["data"]["list"]  # returns a dictionary
-            parsed = parse.articles(articles)
-            request.post_articles(parsed, worksheet["name"])
-        return {
-            "statusCode": 200,
-            "body": "Articles successfully saved",
-        }
+    successful_updates = []
+    failed_updates = []
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return {
-            "statusCode": 500,
-            "body": "Internal Server Error",
-        }
+    for worksheet in worksheets:
+        current_worksheet = worksheet["name"]
+        try:
+            pocket_data = get_articles(worksheet["pocket_endpoint"])
+            processed_data = process_articles(pocket_data, current_worksheet)
+            update_worksheet(worksheet["name"], processed_data)
+            successful_updates.append(worksheet["name"])
+        except Exception as e:
+            logging.error(
+                f"An error occurred while processing worksheet {worksheet['name']}: {e}"
+            )
+            failed_updates.append({"worksheet": worksheet["name"], "error": str(e)})
+
+    if len(failed_updates) > 0:
+        response_body = "Not all worksheets could be updated. Check logs."
+    else:
+        response_body = "All worksheets updated successfully"
+
+    return {
+        "statusCode": 200,
+        "body": {
+            "message": response_body,
+            "updated_worksheets": successful_updates,
+            "failed_updates": failed_updates,
+        },
+    }

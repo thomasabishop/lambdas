@@ -1,0 +1,42 @@
+[
+    {
+        "id": 3136598124,
+        "workspace_id": 2360906,
+        "project_id": 193325937,
+        "task_id": null,
+        "billable": false,
+        "start": "2023-09-21T20:10:02+00:00",
+        "stop": "2023-09-21T20:39:54Z",
+        "duration": 1792,
+        "description": "pytest blog post",
+        "tags": [],
+        "tag_ids": [],
+        "duronly": true,
+        "at": "2023-09-21T20:39:54+00:00",
+        "server_deleted_at": null,
+        "user_id": 3700888,
+        "uid": 3700888,
+        "wid": 2360906,
+        "pid": 193325937
+    },
+    {
+        "id": 3136597694,
+        "workspace_id": 2360906,
+        "project_id": 193325940,
+        "task_id": null,
+        "billable": false,
+        "start": "2023-09-21T18:09:38+00:00",
+        "stop": "2023-09-21T20:09:50Z",
+        "duration": 7212,
+        "description": "add tests pocket lambda",
+        "tags": [],
+        "tag_ids": [],
+        "duronly": true,
+        "at": "2023-09-21T20:09:50+00:00",
+        "server_deleted_at": null,
+        "user_id": 3700888,
+        "uid": 3700888,
+        "wid": 2360906,
+        "pid": 193325940
+    }
+]

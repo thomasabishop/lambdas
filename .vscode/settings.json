@@ -1,0 +1,3 @@
+{
+  "python.analysis.extraPaths": ["./gsheet-utils/update_sheet"]
+}
