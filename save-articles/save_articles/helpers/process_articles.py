@@ -13,6 +13,7 @@ def extract_articles(pocket_data: Dict[str, Any]) -> Dict[str, Dict]:
     """Extract the dictionary of articles from the Pocket API response"""
     try:
         # If no data passed in:
+
         if not pocket_data:
             raise ValueError("Data returned from Pocket API is empty")
         return pocket_data.get("data", {}).get("list", {})
@@ -35,7 +36,7 @@ def transform_articles(articles: List[List]) -> List[List]:
     return date_converted_articles
 
 
-def parse_articles(articles: Dict[str, Any]) -> List[List]:
+def parse_articles(articles: Dict[str, Any], current_worksheet) -> List[List]:
     """Extract article properties to multidimenisonal list"""
 
     # Extract article properties as multidimensional list:
@@ -52,7 +53,9 @@ def parse_articles(articles: Dict[str, Any]) -> List[List]:
                 article["resolved_url"],
             )
         except KeyError as e:
-            logging.warning(f"Article missing {e} property. Skipping article.")
+            logging.warning(
+                f"Article in '{current_worksheet}' missing {e} property. Skipping article."
+            )
             continue
 
         articles_list.append([time_added, given_title, resolved_url])
@@ -60,11 +63,11 @@ def parse_articles(articles: Dict[str, Any]) -> List[List]:
     return articles_list
 
 
-def main(pocket_data: Dict[str, Any]) -> List[List]:
+def main(pocket_data: Dict[str, Any], current_worksheet: str) -> List[List]:
     """Orchestrate the overall processing of articles"""
     try:
         articles = extract_articles(pocket_data)
-        parsed_articles = parse_articles(articles)
+        parsed_articles = parse_articles(articles, current_worksheet)
         transformed_articles = transform_articles(parsed_articles)
         return transformed_articles
     except Exception as e:

@@ -77,7 +77,7 @@ def test_parse_articles_success():
     where each element is a list of extracted properties.
     """
     mock_article_list = mock_pocket_api_response["data"]["list"]
-    result = parse_articles(mock_article_list)
+    result = parse_articles(mock_article_list, "worksheet-name")
     assert result == [
         [
             "1694457911",
@@ -95,7 +95,7 @@ def test_parse_articles_success():
 def test_parse_articles_failure_empty():
     """If no articles to parse, it should return an empty list"""
     with pytest.raises(ValueError, match="No articles to parse"):
-        parse_articles({})
+        parse_articles({}, "worksheet-name")
 
 
 def test_parse_articles_failure_missing_properties(caplog):
@@ -110,14 +110,17 @@ def test_parse_articles_failure_missing_properties(caplog):
     }
 
     mock_article_list = mock_pocket_api_response_copy["data"]["list"]
-    result = parse_articles(mock_article_list)
+    result = parse_articles(mock_article_list, "worksheet-name")
 
-    assert "Article missing 'time_added' property. Skipping article." in caplog.text
+    assert (
+        "Article in 'worksheet-name' missing 'time_added' property. Skipping article."
+        in caplog.text
+    )
     assert len(result) == 2  # should not be 3 because of missing property
 
 
 def test_main_success():
-    result = process_articles(mock_pocket_api_response)
+    result = process_articles(mock_pocket_api_response, "worksheet-name")
     assert result == [
         ["11-09-2023", "Article One", "https://www.article1.com"],
         ["05-07-2023", "Article Two", "https://www.article2.com"],
