@@ -11,15 +11,16 @@ def handler(event, context):
         {"pocket_endpoint": "gaby", "name": "gaby_articles"},
     ]
 
-    updated = []
+    successful_updates = []
     failed_updates = []
 
     for worksheet in worksheets:
+        current_worksheet = worksheet["name"]
         try:
             pocket_data = get_articles(worksheet["pocket_endpoint"])
-            processed_data = process_articles(pocket_data)
+            processed_data = process_articles(pocket_data, current_worksheet)
             update_worksheet(worksheet["name"], processed_data)
-            updated.append(worksheet["name"])
+            successful_updates.append(worksheet["name"])
         except Exception as e:
             logging.error(
                 f"An error occurred while processing worksheet {worksheet['name']}: {e}"
@@ -27,7 +28,7 @@ def handler(event, context):
             failed_updates.append((worksheet["name"], str(e)))
 
     if len(failed_updates) > 0:
-        response_body = "Not all worksheets could be updated"
+        response_body = "Not all worksheets could be updated. Check logs."
     else:
         response_body = "All worksheets updated successfully"
 
@@ -35,7 +36,7 @@ def handler(event, context):
         "statusCode": 200,
         "body": {
             "message": response_body,
-            "updated_worksheets": updated,
+            "updated_worksheets": successful_updates,
             "failed_updates": failed_updates,
         },
     }
