@@ -21,3 +21,19 @@ def test_get_google_credentials_failure_missing_env_var():
         get_google_credentials()
 
     assert "Error: GOOGLE_CREDS environment variable is not set" in str(excinfo.value)
+
+
+def test_get_google_credentials_failure_invalid_json(caplog):
+    """
+    Should log an error and raise ValueError if GOOGLE_CREDS is not valid JSON
+    """
+
+    os.environ["GOOGLE_CREDS"] = "invalid json"
+
+    with raises(Exception):
+        get_google_credentials()
+
+    assert (
+        "Error: GOOGLE_CREDS environment variable exists but required Google credentials could not be sourced"
+        in caplog.text
+    )

@@ -29,7 +29,8 @@ def get_google_credentials():
         logging.error(
             f"Error: GOOGLE_CREDS environment variable exists but required Google credentials could not be sourced: {e}"
         )
-        return None
+        # return None
+        raise
 
 
 def create_google_client() -> Optional[gspread.client.Client]:
