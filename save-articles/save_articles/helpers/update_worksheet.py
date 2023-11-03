@@ -26,6 +26,7 @@ def get_google_credentials():
         return creds
 
     except Exception as e:
+        print("goes wrong")
         logging.error(
             f"Error: GOOGLE_CREDS environment variable exists but required Google credentials could not be sourced: {e}"
         )
@@ -45,7 +46,8 @@ def create_google_client() -> Optional[gspread.client.Client]:
 
     except Exception as e:
         logging.error(f"Error: Google Sheets client could not be created: {e}")
-        return None
+        raise
+        # return None
 
 
 def main(worksheet_name: str, article_entries: List[List]) -> None:
@@ -66,3 +68,4 @@ def main(worksheet_name: str, article_entries: List[List]) -> None:
 
     except Exception as e:
         logging.warning(f"An error occurred: {e}")
+        raise

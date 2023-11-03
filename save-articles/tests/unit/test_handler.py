@@ -115,6 +115,6 @@ def test_handler_partial_failure(setup_function):
 
     # Resulting in one failed update:
     assert len(response["body"]["failed_updates"]) == 1
-
+    assert response["body"]["failed_updates"][0]["error"] == "Some error"
     # And two successful updates
     assert len(response["body"]["updated_worksheets"]) == 2

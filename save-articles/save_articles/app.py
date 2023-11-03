@@ -25,7 +25,7 @@ def handler(event, context):
             logging.error(
                 f"An error occurred while processing worksheet {worksheet['name']}: {e}"
             )
-            failed_updates.append((worksheet["name"], str(e)))
+            failed_updates.append({"worksheet": worksheet["name"], "error": str(e)})
 
     if len(failed_updates) > 0:
         response_body = "Not all worksheets could be updated. Check logs."
