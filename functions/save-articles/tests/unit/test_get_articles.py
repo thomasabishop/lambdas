@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch, Mock
 from requests.exceptions import RequestException, HTTPError, Timeout, ConnectionError
 
-parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+parentdir = "/home/thomas/repos/lambdas/functions/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
 
@@ -64,7 +64,7 @@ def test_success():
 
     # Import mock Pocket API response from file
     fixture = Path(
-        "/home/thomas/repos/lambdas/save-articles/tests/fixtures/pocket_api_response.json"
+        "/home/thomas/repos/lambdas/functions/save-articles/tests/fixtures/pocket_api_response.json"
     )
 
     with open(fixture) as f:

@@ -6,7 +6,7 @@ Test command: pytest --cache-clear
 # Below is necessary for imports within app.hanlder to resolve correctly:
 import sys
 
-parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+parentdir = "/home/thomas/repos/lambdas/functions/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
 

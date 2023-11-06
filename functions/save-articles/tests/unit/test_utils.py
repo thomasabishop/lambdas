@@ -1,7 +1,7 @@
 import logging, sys, datetime
 from typing import List
 
-parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+parentdir = "/home/thomas/repos/lambdas/functions/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
 from helpers import utils

@@ -3,7 +3,7 @@ import pytest  # type: ignore
 from pathlib import Path
 from unittest.mock import patch
 
-parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+parentdir = "/home/thomas/repos/lambdas/functions/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
 # Import the parse_articles function from the helpers module

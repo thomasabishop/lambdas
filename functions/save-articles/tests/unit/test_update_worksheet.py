@@ -4,7 +4,7 @@ from unittest.mock import patch, Mock
 from oauth2client.service_account import ServiceAccountCredentials  # type: ignore
 
 
-parentdir = "/home/thomas/repos/lambdas/save-articles/save_articles"
+parentdir = "/home/thomas/repos/lambdas/functions/save-articles/save_articles"
 sys.path.insert(0, parentdir)
 
 from helpers import get_google_credentials
