@@ -1,6 +1,6 @@
 {
-    "name": "fetch-client",
-    "description": "Wrapper for Node fetch functions",
+    "name": "@tb/fetch-client",
+    "description": "Wrapper for node-fetch functions",
     "main": "dist/index.js",
     "type": "module",
     "author": "Thomas Bishop",
