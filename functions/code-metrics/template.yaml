@@ -7,36 +7,36 @@ Globals:
     Timeout: 20
     MemorySize: 256
     Tracing: Active
+    Environment:
+      Variables:
+        WAKATIME_API_KEY: ""
   Api:
     TracingEnabled: true
 Resources:
-  QueryWakatimeFunctionRole:
-    Type: AWS::IAM::Role
+  TimeCodingFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      Policies:
-        - PolicyName: lambda-execution-policy
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - "logs:CreateLogGroup"
-                  - "logs:CreateLogStream"
-                  - "logs:PutLogEvents"
-                Resource: "*"
+      CodeUri: time-coding/
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      Events:
+        TimeCodingApi:
+          Type: Api
+          Properties:
+            Path: /time-coding
+            Method: get
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2020
+        EntryPoints:
+          - index.ts
   QueryWakatimeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Role: !GetAtt QueryWakatimeFunctionRole.Arn
       CodeUri: query-wakatime/
       Handler: index.handler
       Runtime: nodejs16.x
@@ -48,9 +48,6 @@ Resources:
           Properties:
             Path: /query-wakatime
             Method: get
-      Environment:
-        Variables:
-          WAKATIME_API_KEY: ""
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -59,12 +56,12 @@ Resources:
         EntryPoints:
           - index.ts
 Outputs:
-  QueryWakatimeApi:
+  CodeMetricsApi:
     Description: "API Gateway endpoint URL for Prod stage for Query Wakatime function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query-wakatime/"
   QueryWakatimeFunction:
     Description: "Query Lambda Function ARN"
     Value: !GetAtt QueryWakatimeFunction.Arn
-  QueryWakatimeFunctionIamRole:
-    Description: "IAM Role created for Query Wakatime function"
-    Value: !GetAtt QueryWakatimeFunctionRole.Arn
+  TimeCodingFunction:
+    Description: "Time Coding Lambda Function ARN"
+    Value: !GetAtt TimeCodingFunction.Arn
