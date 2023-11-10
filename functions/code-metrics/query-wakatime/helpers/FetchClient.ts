@@ -1,4 +1,4 @@
-import fetch, { RequestInit, Response } from 'node-fetch'
+import fetch, { RequestInit, Response } from "node-fetch"
 
 export class FetchClient {
     private baseUrl: string
@@ -8,14 +8,14 @@ export class FetchClient {
     }
 
     async get(endpoint: string, init?: RequestInit): Promise<Response> {
-        return this.request('GET', endpoint, init)
+        return this.request("GET", endpoint, init)
     }
 
     async post<T>(endpoint: string, body: T, init?: RequestInit): Promise<Response> {
-        return this.request('POST', endpoint, {
+        return this.request("POST", endpoint, {
             ...init,
             body: JSON.stringify(body),
-            headers: { ...init?.headers, 'Content-Type': 'application/json' },
+            headers: { ...init?.headers, "Content-Type": "application/json" },
         })
     }
 
