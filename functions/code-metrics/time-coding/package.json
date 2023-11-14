@@ -1,21 +1,20 @@
 {
-  "name": "code-metrics/time-coding",
+  "name": "time-coding",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
-  "author": "SAM CLI",
+  "description": "Endpoint for Code Metrics API which returns coding duration data from WakaTime",
+  "main": "index.ts",
   "license": "MIT",
-  "dependencies": {
-    "@types/node-fetch": "^2.6.3",
-    "esbuild": "^0.14.14",
-    "node-fetch": "^3.3.1"
-  },
   "scripts": {
     "unit": "jest",
     "lint": "eslint '*.ts' --quiet --fix",
     "compile": "tsc",
     "test": "npm run compile && npm run unit"
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.6.3",
+    "esbuild": "^0.14.14",
+    "node-fetch": "^3.3.1",
+    "tb-fetch-client": "^1.0.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.92",
