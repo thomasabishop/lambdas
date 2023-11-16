@@ -1,4 +1,3 @@
-/// <reference types="@types/jest" />
 import { jest } from "@jest/globals"
 import { expect, describe, it } from "@jest/globals"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"

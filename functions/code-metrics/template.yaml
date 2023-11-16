@@ -21,7 +21,7 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      Events:
+      Eventsactivities:
         TimeCodingApi:
           Type: Api
           Properties:

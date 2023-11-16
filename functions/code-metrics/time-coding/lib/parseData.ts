@@ -1,4 +1,4 @@
-interface ISummary {
+export interface ISummary {
     grand_total: {
         decimal: string
     }
