@@ -13,6 +13,35 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
+  CodeMetricsApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: "'POST, GET'"
+        AllowHeaders: "'X-Forwarded-For'"
+        AllowOrigin: "'*'"
+        MaxAge: "'600'"
+        AllowCredentials: true
+      DefinitionBody:
+        swagger: "2.0"
+        info:
+          title: CodeMetrics API
+        paths:
+          /code-metrics/time-coding:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TimeCodingFunction.Arn}/invocations
+          /code-metrics/query-wakatime:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${QueryWakatimeFunction.Arn}/invocations
   TimeCodingFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -21,12 +50,6 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      Eventsactivities:
-        TimeCodingApi:
-          Type: Api
-          Properties:
-            Path: /time-coding
-            Method: get
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -42,12 +65,6 @@ Resources:
       Runtime: nodejs16.x
       Architectures:
         - x86_64
-      Events:
-        QueryWakatimeApi:
-          Type: Api
-          Properties:
-            Path: /query-wakatime
-            Method: get
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -58,7 +75,7 @@ Resources:
 Outputs:
   CodeMetricsApi:
     Description: "API Gateway endpoint URL for Prod stage for Query Wakatime function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query-wakatime/"
+    Value: !Sub "https://${CodeMetricsApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
   QueryWakatimeFunction:
     Description: "Query Lambda Function ARN"
     Value: !GetAtt QueryWakatimeFunction.Arn
