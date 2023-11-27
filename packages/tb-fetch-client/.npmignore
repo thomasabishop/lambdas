@@ -1,4 +1,0 @@
-.eslint*
-.prettierrc.js
-src/
-tsconfig.json

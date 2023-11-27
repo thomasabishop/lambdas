@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    pocket-articles
+Globals:
+    Function:
+        Timeout: 10
+        MemorySize: 256
+Resources:
+    PocketArticlesFunction:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: index.handler
+            Runtime: nodejs16.x
+            Architectures:
+                - x86_64
+            Events:
+                QueryPocketApi:
+                    Type: Api
+                    Properties:
+                        Path: /pocket-articles
+                        Method: get
+            Environment:
+                Variables:
+                    POCKET_CREDENTIALS: ""
+        Metadata:
+            BuildMethod: esbuild
+            BuildProperties:
+                Minify: true
+                Target: "es2020"
+                Sourcemap: true
+                EntryPoints:
+                    - index.ts
+Outputs:
+    PocketArticlesApi:
+        Description: "API Gateway endpoint URL for Prod stage for Query Pocket function"
+        Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/query-pocket/get-articles-by-tag"
+    PocketArticlesFunction:
+        Description: "Query Pocket Lambda Function ARN"
+        Value: !GetAtt QueryPocketFunction.Arn
+    PocketArticlesFunctionIamRole:
+        Description: "Implicit IAM Role created for Query Pocket function"
+        Value: !GetAtt QueryPocketFunctionRole.Arn
