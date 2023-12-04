@@ -1,10 +1,9 @@
 {
-    "name": "time-coding",
+    "name": "code-metrics_stats",
     "version": "1.0.0",
-    "description": "Endpoint for Code Metrics API which returns coding duration data from WakaTime",
+    "description": "Endpoint for Code Metrics API which returns coding language duration data from WakaTime",
     "main": "index.ts",
     "license": "MIT",
-    "type": "module",
     "scripts": {
         "unit": "jest",
         "lint": "eslint '*.ts' --quiet --fix",
@@ -13,6 +12,7 @@
     },
     "dependencies": {
         "@types/node-fetch": "^2.6.3",
+        "axios": "^1.6.2",
         "esbuild": "^0.14.14",
         "node-fetch": "^3.3.1",
         "tb-fetch-client": "^1.0.1"

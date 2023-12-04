@@ -1,27 +1,29 @@
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import { FetchClient } from "tb-fetch-client"
-import { getDateRange } from "./lib/getDateRange"
-import { parseData } from "./lib/parseData"
 const { WAKATIME_API_KEY } = process.env
-const fetchClient = new FetchClient("https://wakatime.com/api/v1/")
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const timePeriod = event.queryStringParameters?.timePeriod
+
         const encodedKey = Buffer.from(WAKATIME_API_KEY as string).toString("base64")
-        const headers = {
-            Authorization: `Basic ${encodedKey}`,
+        const headers: AxiosRequestConfig = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Basic ${encodedKey}`,
+            },
         }
 
-        const data = parseData(
-            await fetchClient.get(`users/current/summaries?${getDateRange(timePeriod)}`, { headers }),
+        const response: AxiosResponse = await axios.get(
+            `https://wakatime.com/api/v1/users/current/stats/${timePeriod}`,
+            headers,
         )
 
         return {
             statusCode: 200,
             body: JSON.stringify({
-                data: data,
-                message: "Successfully retrieved time entries",
+                data: response?.data,
+                message: "Successfully retrieved stats",
             }),
         }
     } catch (error: unknown) {

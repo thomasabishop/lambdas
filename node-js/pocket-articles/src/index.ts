@@ -3,7 +3,7 @@ import { getPocketCredentials } from "./lib/getPocketCredentials"
 import axios, { AxiosResponse } from "axios"
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const responseHeaders = {
+    const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
     }
@@ -32,7 +32,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             body: JSON.stringify({
                 data: axiosResponse.data,
             }),
-            headers: responseHeaders,
+            headers: headers,
         }
         return response
     } catch (err: unknown) {
@@ -42,7 +42,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             body: JSON.stringify({
                 message: err instanceof Error ? err.message : "An error occurred",
             }),
-            headers: responseHeaders,
+            headers: headers,
         }
     }
 }

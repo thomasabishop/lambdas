@@ -7,6 +7,11 @@ import { validateDateRange } from "./lib/validateDateRange"
 const togglClient = new TogglClient()
 const workspaceId = process.env.TOGGL_WORKSPACE_ID as string
 
+const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+}
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const projects = await getProjects(workspaceId, togglClient)
@@ -15,6 +20,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const timeEntries = await getTimeEntries(dateRange, togglClient, projects)
 
         return {
+            headers: headers,
             statusCode: 200,
             body: JSON.stringify({
                 data: timeEntries,
@@ -30,6 +36,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             body: JSON.stringify({
                 message: errorMessage,
             }),
+            headers: headers,
         }
     }
 }
