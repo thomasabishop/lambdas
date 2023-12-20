@@ -22,7 +22,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         return {
             statusCode: 200,
             body: JSON.stringify({
-                data: response?.data,
+                data: response?.data?.data,
                 message: "Successfully retrieved stats",
             }),
         }
