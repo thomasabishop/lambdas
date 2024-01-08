@@ -28,7 +28,6 @@ Resources:
             Schedule: cron(0 19 * * ? *)
       Environment:
         Variables:
-          GSHEETS_LAMBDA_ENDPOINT: ""
           POCKET_LAMBDA_ENDPOINT: ""
           GOOGLE_CREDS: ""
 Outputs:
