@@ -49,6 +49,7 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
         - x86_64
+      Policies: AWSLambdaBasicExecutionRole
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
@@ -64,6 +65,7 @@ Resources:
       Runtime: nodejs18.x
       Architectures:
         - x86_64
+      Policies: AWSLambdaBasicExecutionRole
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
