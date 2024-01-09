@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  code-durations
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  CodeDurationsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        CodeDurationsApi:
+          Type: Api
+          Properties:
+            Path: /code-durations
+            Method: get
+      Environment:
+        Variables:
+          WAKATIME_API_KEY: ""
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - index.ts
+
+Outputs:
+  CodeDurationsApi:
+    Description: "API Gateway endpoint URL for Prod stage for Code Durations function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/code-durations"
+  CodeDurationsFunction:
+    Description: "Code Durations Lambda Function ARN"
+    Value: !GetAtt CodeDurationsFunction.Arn
+  CodeDurationsFunctionIamRole:
+    Description: "Implicit IAM Role created for Code Durations function"
+    Value: !GetAtt CodeDurationsFunctionRole.Arn
