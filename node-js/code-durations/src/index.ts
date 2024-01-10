@@ -4,13 +4,18 @@ import { getDateRange } from "./lib/getDateRange"
 import { parseData } from "./lib/parseData"
 const { WAKATIME_API_KEY } = process.env
 
+const headersAll = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+}
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const timePeriod = event.queryStringParameters?.timePeriod
         const encodedKey = Buffer.from(WAKATIME_API_KEY as string).toString("base64")
         const headers: AxiosRequestConfig = {
             headers: {
-                "Content-Type": "application/json",
+                ...headersAll,
                 Authorization: `Basic ${encodedKey}`,
             },
         }
@@ -28,6 +33,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
                 data: data,
                 message: "Successfully retrieved time entries",
             }),
+            headers: headersAll,
         }
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
@@ -37,6 +43,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             body: JSON.stringify({
                 message: errorMessage,
             }),
+            headers: headersAll,
         }
     }
 }
