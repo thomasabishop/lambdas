@@ -2,6 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 const { WAKATIME_API_KEY } = process.env
 
+const headersAll = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+}
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const timePeriod = event.queryStringParameters?.timePeriod
@@ -9,7 +14,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const encodedKey = Buffer.from(WAKATIME_API_KEY as string).toString("base64")
         const headers: AxiosRequestConfig = {
             headers: {
-                "Content-Type": "application/json",
+                ...headersAll,
                 Authorization: `Basic ${encodedKey}`,
             },
         }
@@ -25,6 +30,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
                 data: response?.data?.data,
                 message: "Successfully retrieved stats",
             }),
+            headers: headersAll,
         }
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
@@ -34,6 +40,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             body: JSON.stringify({
                 message: errorMessage,
             }),
+            headers: headersAll,
         }
     }
 }
