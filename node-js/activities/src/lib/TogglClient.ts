@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios"
 import { base64Encode } from "./base64Encode"
 
 class TogglClient {
-    private baseUrl = "https://api.track.toggl.com/api/v9/"
+    private baserl = "https://api.track.toggl.com/api/v9/"
 
     public async get(endpoint: string) {
         const headers = this.headers()
