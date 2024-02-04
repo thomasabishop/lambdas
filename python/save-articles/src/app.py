@@ -9,6 +9,7 @@ def handler(event, context):
         {"pocket_endpoint": "general", "name": "general_articles"},
         {"pocket_endpoint": "technical", "name": "technical_articles"},
         {"pocket_endpoint": "gaby", "name": "gaby_articles"},
+        {"pocket_endpoint": "tools", "name": "tools"},
     ]
 
     successful_updates = []
