@@ -1,0 +1,78 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description:
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  TimeTrackingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      Events:
+        Fetch:
+          Type: Api
+          Properties:
+            Path: /fetch
+            Method: get
+        Update:
+          Type: Api
+          Properties:
+            Path: /update
+            Method: post
+      Environment:
+        Variables:
+          DB_NAME:
+          DB_ROOT_PASSWORD:
+          DB_USER:
+          DB_PASSWORD:
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - index.ts
+
+  # Needed for database access outside of app
+  DBUsernameParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/TimeTracking/DBUsername"
+      Type: String
+      Value: ""
+
+  # Needed for database access outside of app
+  DBPasswordParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "/TimeTracking/DBPassword"
+      Type: String
+      Value: "examplePassword"
+
+  TimeTrackingDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: timetracking_db
+      AllocatedStorage: 5
+      DBInstanceClass: db.t2.micro
+      Engine: MySQL
+      MasterUsername: !Ref DBUsernameParameter
+      MasterUserPassword: !Ref DBPasswordParameter
+
+Outputs:
+  TimeTrackingApi:
+    Description: "API Gateway endpoint URL for Prod stage for Time Tracking function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/time-tracking/"
+  TimeTrackingFunction:
+    Description: "Time Tracking Lambda Function ARN"
+    Value: !GetAtt TimeTrackingFunction.Arn
+  TimeTrackingFunctionIamRole:
+    Description: "Implicit IAM Role created for Time Trcking function"
+    Value: !GetAtt TimeTrackingFunctionRole.Arn
