@@ -1,17 +1,30 @@
 version: "3.8"
 services:
-  mysql:
+  local:
     image: mysql
-    container_name: timetracking_mysql_db
+    container_name: timetracking_mysql_local_db
     environment:
-      DB_DATABASE: ${DB_NAME}
-      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - local_mysql_data:/var/lib/mysql
+  stage:
+    image: mysql
+    container_name: timetracking_mysql_stage_db
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - stage_mysql_data:/var/lib/mysql
 
 volumes:
-  mysql_data:
+  local_mysql_data:
+  stage_mysql_data:

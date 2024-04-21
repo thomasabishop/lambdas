@@ -4,6 +4,13 @@
 
 ### Start local MySQL database via docker
 
+There are two local MySQL instances:
+
+| Instance | Purpose                                                                           |
+| -------- | --------------------------------------------------------------------------------- |
+| `local`  | Local development and testing                                                     |
+| `stage`  | Migrated clone of current production DB for use when developing frontend features |
+
 #### Prerequisites
 
 ```sh
@@ -14,7 +21,7 @@ systemctl start docker.service
 ```
 
 ```sh
-docker-compose up
+docker-compose up [local/stage]
 ```
 
 ### Start API Gateway

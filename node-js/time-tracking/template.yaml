@@ -54,12 +54,12 @@ Resources:
     Properties:
       Name: "/TimeTracking/DBPassword"
       Type: String
-      Value: "examplePassword"
+      Value: ""
 
   TimeTrackingDB:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBName: timetracking_db
+      DBName: time_tracking_db
       AllocatedStorage: 5
       DBInstanceClass: db.t2.micro
       Engine: MySQL
