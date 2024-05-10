@@ -1,22 +1,24 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { connection } from "./lib/connect"
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-  try {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "hello world",
-      }),
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "some error happened",
-      }),
-    };
-  }
-};
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+   try {
+      const [rows, fields] = await connection.query("SELECT * FROM test_conn")
+      return {
+         statusCode: 200,
+         body: JSON.stringify({
+            data: rows,
+            message: "Success",
+         }),
+      }
+   } catch (err) {
+      console.log(err)
+
+      return {
+         statusCode: 500,
+         body: JSON.stringify({
+            message: "Error",
+         }),
+      }
+   }
+}
