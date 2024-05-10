@@ -6,10 +6,10 @@
 
 There are two local MySQL instances:
 
-| Instance | Purpose                                                                           |
-| -------- | --------------------------------------------------------------------------------- |
-| `local`  | Local development and testing                                                     |
-| `stage`  | Migrated clone of current production DB for use when developing frontend features |
+| Instance | Purpose                                          |
+| -------- | ------------------------------------------------ |
+| `local`  | Breakable local development database             |
+| `stage`  | Migrated pristine clone of current production DB |
 
 #### Prerequisites
 
@@ -28,6 +28,30 @@ docker-compose up [local/stage]
 
 ```sh
 make start
+```
+
+### Connection
+
+When connecting to the local DB it is necessary to use the IP address of the
+Docker network rather than `localhost`. Otherwise the lambda will return a
+connection error.
+
+This is typically `172.17.0.1` but may change. Identify the current address
+with:
+
+```bash
+ip addr show | grep docker0
+```
+
+Therefore, the local connection parameters:
+
+```js
+const connection = await mysql.createConnection({
+  host: "172.17.0.1",
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+});
 ```
 
 ## Database
