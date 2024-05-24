@@ -1,0 +1,145 @@
+Chore,2024-03-27 10:44:28,2024-03-27 15:34:09,4.83,restore OS
+Project,2024-03-28 10:00:00,2024-03-28 10:18:03,0.3,linux ricing
+Chore,2024-03-28 10:18:20,2024-03-28 10:32:20,0.23,fix rsnapshot
+Project,2024-03-28 13:43:47,2024-03-28 16:29:03,2.75,linux ricing
+Project,2024-03-28 16:29:14,2024-03-28 18:22:23,1.89,linux ricing
+Project,2024-03-30 10:00:00,2024-03-30 16:14:43,6.25,research docker for sys obs
+"Project,",2024-03-30 16:15:12,2024-03-30 18:20:51,2.09,code metrics redux
+"Chore,",2024-03-30 18:25:28,2024-03-30 18:42:10,0.28,try fix daily backup
+"Chore,",2024-03-30 18:42:37,2024-03-30 18:52:47,0.17,try find old time entries
+Project,2024-03-31 18:00:00,2024-03-31 19:02:47,1.05,configure rofi
+Project,2024-04-01 07:00:00,2024-04-01 08:37:52,1.63,rofi styling
+Project,2024-04-01 09:09:03,2024-04-01 09:29:15,0.34,rofi styling
+Project,2024-04-01 13:00:00,2024-04-01 16:20:18,3.34,code metrics redux
+Chore,2024-04-04 14:43:47,2024-04-04 14:57:47,0.23,waybar tweaks
+Project,2024-04-04 14:59:53,2024-04-04 15:25:38,0.43,add screenshot function
+Project,2024-04-06 08:06:19,2024-04-06 17:43:31,9.62,waybar redo
+Project,2024-04-07 14:28:33,2024-04-07 14:33:56,0.09,waybar redo
+Project,2024-04-07 14:33:59,2024-04-07 16:27:36,1.89,waybar redo
+Project,2024-04-07 16:27:40,2024-04-07 16:28:37,0.02,waybar redo
+Project,2024-04-07 16:30:47,2024-04-07 17:46:01,1.25,waybar redo
+Project,2024-04-07 17:46:04,2024-04-07 18:18:05,0.53,waybar redo
+Project,2024-04-08 15:45:00,2024-04-08 18:07:10,2.37,titlebars hypr
+Study,2024-04-09 06:00:00,2024-04-09 06:18:57,0.32,higher level language structure
+Chore,2024-04-09 06:19:18,2024-04-09 08:58:43,2.66,tidy Eolas
+Project,2024-04-09 15:25:29,2024-04-09 15:44:52,0.32,ricing
+Project,2024-04-09 16:01:40,2024-04-09 16:04:35,0.05,ricing
+Project,2024-04-09 16:21:50,2024-04-09 17:23:32,1.03,improve waybar scripts
+Project,2024-04-09 17:26:39,2024-04-09 17:31:24,0.08,improve waybar scripts
+Project,2024-04-12 07:04:17,2024-04-12 10:53:59,3.83,code metrics redux
+Project,2024-04-12 15:07:20,2024-04-12 16:04:50,0.96,code metrics redux
+Project,2024-04-13 11:17:45,2024-04-13 16:02:37,4.75,slackbot notifier
+Project,2024-04-13 16:23:23,2024-04-13 16:59:13,0.6,code metrics redux
+Project,2024-04-14 16:14:11,2024-04-14 16:19:38,0.09,slackbot notifier
+Project,2024-04-14 16:19:44,2024-04-14 16:19:57,0.0,slackbot notifier
+Project,2024-04-14 16:20:41,2024-04-14 16:22:28,0.03,slackbot notifier
+Project,2024-04-14 16:22:33,2024-04-14 16:24:37,0.03,slackbot notifier
+Project,2024-04-14 16:24:45,2024-04-14 16:40:24,0.26,slackbot notifier
+Project,2024-04-14 16:40:56,2024-04-14 16:41:05,0.0,slackbot notifier
+Project,2024-04-14 16:41:28,2024-04-14 16:47:03,0.09,slackbot notifier
+Project,2024-04-14 16:47:05,2024-04-14 16:47:08,0.0,slackbot notifier
+Project,2024-04-14 16:47:10,2024-04-14 17:05:53,0.31,slackbot notifier
+Project,2024-04-14 17:05:56,2024-04-14 17:06:10,0.0,slackbot notifier
+Project,2024-04-14 17:06:19,2024-04-14 17:07:55,0.03,slackbot notifier
+Project,2024-04-14 17:08:02,2024-04-14 17:08:09,0.0,slackbot notifier
+Project,2024-04-14 17:08:26,2024-04-14 17:36:22,0.47,slackbot notifier
+Project,2024-04-14 17:36:41,2024-04-14 17:37:03,0.01,slackbot notifier
+Project,2024-04-14 17:37:10,2024-04-14 17:37:19,0.0,slackbot notifier
+Project,2024-04-14 17:37:30,2024-04-14 17:38:09,0.01,slackbot notifier
+Project,2024-04-14 17:38:12,2024-04-14 17:38:46,0.01,slackbot notifier
+Project,2024-04-14 17:38:52,2024-04-14 17:40:17,0.02,slackbot notifier
+Project,2024-04-14 17:40:23,2024-04-14 17:48:47,0.14,slackbot notifier
+Project,2024-04-14 17:52:23,2024-04-14 17:52:28,0.0,slackbot notifier
+Project,2024-04-14 17:52:31,2024-04-14 17:52:33,0.0,slackbot notifier
+Project,2024-04-14 18:12:32,2024-04-14 18:12:36,0.0,slackbot notifier
+Project,2024-04-14 18:12:42,2024-04-14 18:13:56,0.02,slackbot notifier
+Project,2024-04-14 18:19:50,2024-04-14 18:21:10,0.02,slackbot notifier
+Project,2024-04-14 20:02:05,2024-04-14 20:02:16,0.0,slackbot notifier
+Project,2024-04-14 20:02:27,2024-04-14 20:07:11,0.08,slackbot notifier
+Project,2024-04-14 20:07:36,2024-04-14 20:07:44,0.0,slackbot notifier
+Project,2024-04-14 20:07:58,2024-04-14 20:08:01,0.0,slackbot notifier
+Project,2024-04-14 20:08:03,2024-04-14 20:08:05,0.0,slackbot notifier
+Project,2024-04-14 20:08:07,2024-04-14 20:09:16,0.02,slackbot notifier
+Project,2024-04-14 20:24:52,2024-04-14 20:25:15,0.01,slackbot notifier
+Project,2024-04-14 20:25:21,2024-04-14 20:32:28,0.12,slackbot notifier
+Project,2024-04-14 20:32:35,2024-04-14 20:32:37,0.0,slackbot notifier
+Project,2024-04-14 20:32:42,2024-04-14 20:40:06,0.12,slackbot notifier
+Project,2024-04-14 20:40:13,2024-04-14 20:40:57,0.01,slackbot notifier
+Project,2024-04-14 20:41:15,2024-04-14 20:43:36,0.04,slackbot notifier
+Project,2024-04-15 15:30:48,2024-04-15 17:28:22,1.96,sys obs slack int
+Study,2024-04-16 06:24:52,2024-04-16 06:59:19,0.57,stack and heap memory
+Project,2024-04-18 16:00:00,2024-04-18 18:24:33,2.41,time entries redux
+Project,2024-04-19 12:16:03,2024-04-19 13:55:13,1.65,time entries redux
+Project,2024-04-19 13:55:29,2024-04-19 14:22:32,0.45,setup X220
+Study,2024-04-20 11:36:53,2024-04-20 14:00:00,2.39,stack and heap memory
+Study,2024-04-20 14:00:00,2024-04-20 14:26:24,0.44,bitwise operators
+Project,2024-04-21 14:05:49,2024-04-21 17:07:15,3.02,activities integration
+Project,2024-04-21 17:15:54,2024-04-21 17:35:58,0.33,waybar tweaks
+Project,2024-04-22 15:47:38,2024-04-22 16:52:44,1.08,parse time entry dates script
+Blogging,2024-04-23 15:00:00,2024-04-23 16:21:04,1.35,N2T unit two
+Project,2024-04-23 16:21:21,2024-04-23 17:41:21,1.33,parse time entry dates script
+Blogging,2024-04-24 16:15:24,2024-04-24 17:46:34,1.52,N2T unit two
+Project,2024-04-25 15:00:00,2024-04-25 17:46:21,2.77,sys obs style tweaks
+Project,2024-04-25 17:59:41,2024-04-25 18:17:55,0.3,sys obs style tweaks
+Project,2024-04-26 06:55:16,2024-04-26 07:46:44,0.86,sys obs style tweaks
+Project,2024-04-26 08:06:52,2024-04-26 14:17:20,6.17,parse time entry dates script
+Project,2024-04-26 14:57:13,2024-04-26 15:16:29,0.32,time entries redux
+Project,2024-04-26 15:37:56,2024-04-26 16:39:01,1.02,time entries redux
+Study,2024-04-28 10:00:00,2024-04-28 13:22:03,3.37,procedural notes on recent learning
+Study,2024-04-28 16:08:49,2024-04-28 16:54:05,0.75,procedural notes on recent learning
+Gruvbox95 Raleigh fork,2024-04-28 16:54:27,2024-04-28 19:20:18,2.43,Project
+Blogging,2024-04-29 06:00:00,2024-04-29 06:44:52,0.75,N2T unit two
+Project,2024-04-29 15:00:00,2024-04-29 17:01:38,2.03,extract TimeWarrior time entries script
+Project,2024-04-29 17:02:05,2024-04-29 17:48:37,0.78,sys obs style tweaks
+Blogging,2024-04-30 06:00:00,2024-04-30 06:54:52,0.91,N2T unit two
+Project,2024-04-30 15:55:27,2024-04-30 18:14:52,2.32,install xcfe
+Blogging,2024-05-02 06:24:14,2024-05-02 06:53:51,0.49,N2T unit two
+Blogging,2024-05-03 07:13:44,2024-05-03 09:14:41,2.02,N2T unit two
+Project,2024-05-03 09:17:54,2024-05-03 09:18:58,0.02,extract TimeWarrior time entries script
+Project,2024-05-03 09:20:24,2024-05-03 09:43:36,0.39,extract TimeWarrior time entries script
+Project,2024-05-03 12:37:56,2024-05-03 12:41:32,0.06,extract TimeWarrior time entries script
+Project,2024-05-03 12:47:20,2024-05-03 12:49:56,0.04,extract TimeWarrior time entries script
+Project,2024-05-03 12:50:44,2024-05-03 12:55:49,0.08,extract TimeWarrior time entries script
+Project,2024-05-03 13:04:28,2024-05-03 13:04:37,0.0,extract TimeWarrior time entries script
+Project,2024-05-03 13:04:37,2024-05-03 13:11:56,0.12,extract TimeWarrior time entries script
+Project,2024-05-03 13:25:39,2024-05-03 15:29:15,2.06,time entries redux
+Project,2024-05-07 17:42:27,2024-05-08 20:08:20,26.43,backup root
+Project,2024-05-09 06:20:07,2024-05-09 06:37:31,0.29,backup root
+Study,2024-05-09 06:37:45,2024-05-09 07:17:39,0.67,revise electronics notes
+Blogging,2024-05-10 07:00:00,2024-05-10 10:46:23,3.77,N2T unit two
+Project,2024-05-10 13:43:01,2024-05-10 13:43:06,0.0,backup root
+Project,2024-05-10 13:43:15,2024-05-10 16:11:49,2.48,time entries redux
+Study,2024-05-12 09:53:54,2024-05-12 11:49:15,1.92,revise electronics notes
+Project,2024-05-12 12:40:43,2024-05-12 13:22:31,0.7,time entries redux
+Project,2024-05-12 13:35:51,2024-05-12 14:16:38,0.68,time entries redux
+Project,2024-05-12 15:31:17,2024-05-12 15:31:46,0.01,time entries redux
+Project,2024-05-12 15:31:46,2024-05-12 15:32:15,0.01,time entries redux
+Project,2024-05-12 15:32:15,2024-05-12 15:33:44,0.02,time entries redux
+Project,2024-05-12 15:42:51,2024-05-12 16:54:32,1.19,time entries redux
+Project,2024-05-12 16:54:32,2024-05-12 18:59:51,2.09,time entries redux
+Blogging,2024-05-13 06:00:00,2024-05-13 07:00:00,1.0,N2T unit two
+Project,2024-05-13 15:59:02,2024-05-13 17:13:56,1.25,time entries redux
+Blogging,2024-05-14 06:14:16,2024-05-14 06:56:31,0.7,N2T unit two
+Study,2024-05-15 06:18:18,2024-05-15 06:25:17,0.12,alter electronics notes
+Blogging,2024-05-15 06:25:34,2024-05-15 06:50:57,0.42,N2T unit two
+Blogging,2024-05-16 06:00:08,2024-05-16 06:02:21,0.04,N2T unit two
+Study,2024-05-16 06:02:50,2024-05-16 06:51:50,0.82,revise electronics notes
+ALU,2024-05-17 07:23:58,2024-05-17 08:27:25,1.06,Study
+Blogging,2024-05-20 16:01:49,2024-05-20 16:25:51,0.4,N2T unit two
+Blogging,2024-05-20 16:39:52,2024-05-20 17:51:07,1.19,N2T unit two
+Study,2024-05-21 06:15:00,2024-05-21 07:00:00,0.75,electronics book
+Blogging,2024-05-21 18:06:57,2024-05-21 18:44:43,0.63,N2T unit two
+Blogging,2024-05-22 06:12:27,2024-05-22 06:45:54,0.56,N2T unit two
+Study,2024-05-22 15:48:08,2024-05-22 17:30:44,1.71,practical electronics exercises
+Blog,2024-05-22 19:32:48,2024-05-22 20:03:06,0.51,electronics first circuit
+Blog,2024-05-23 06:16:12,2024-05-23 07:04:44,0.81,electronics first circuit
+Study,2024-05-23 19:30:00,2024-05-23 21:00:00,1.5,practical electronics
+Blogging,2024-05-24 08:11:34,2024-05-24 11:18:59,3.12,N2T unit two
+Project,2024-05-24 12:25:28,2024-05-24 13:15:36,0.84,time entries redux
+Project,2024-05-24 13:15:36,2024-05-24 13:28:54,0.22,time entries redux
+Project,2024-05-24 13:28:54,2024-05-24 13:29:33,0.01,time entries redux
+Project,2024-05-24 13:29:33,2024-05-24 13:33:04,0.06,time entries redux
+Project,2024-05-24 13:33:04,2024-05-24 14:37:49,1.08,time entries redux
+Project,2024-05-24 14:37:49,2024-05-24 14:43:44,0.1,time entries redux
+Project,2024-05-24 14:43:44,2024-05-24 14:47:06,0.06,time entries redux
+Project,2024-05-24 14:47:06,2024-05-24 14:51:42,0.08,time entries redux
