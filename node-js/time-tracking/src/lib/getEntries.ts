@@ -53,7 +53,7 @@ const getEntries = async (
       }
       return buildHttpResponse(200, data)
    } catch (err) {
-      console.error("Error fetching data: ", err)
+      console.error("Error fetching data from database: ", err)
       return buildHttpResponse(500, "Error fetching time entries")
    }
 }
