@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { createTable } from "./lib/createTable"
 import Database from "./lib/Database"
 import { getEntries } from "./lib/getEntries"
+import { addEntries } from "./lib/addEntries"
 import { buildHttpResponse } from "./lib/buildHttpResponse"
 
 const { DB_NAME } = process.env
@@ -19,6 +20,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             } else {
                return buildHttpResponse(404, "Resource not found")
             }
+         case "POST":
+            return event.resource === "/update"
+               ? await addEntries(event)
+               : buildHttpResponse(404, "Resource not found")
+         // if (event.resource === "/update") {
+         //    return await addEntries(event)
+         // } else {
+         //    return buildHttpResponse(404, "Resource not found")
+         // }
          default:
             return buildHttpResponse(405, `HTTP method ${event.resource} not allowed.`)
       }
