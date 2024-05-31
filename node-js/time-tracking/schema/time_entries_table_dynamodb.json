@@ -1,0 +1,49 @@
+{
+  "TableName": "TimeEntries",
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "activity_start_end",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "start",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "activity_type",
+      "AttributeType": "S"
+    }
+  ],
+  "KeySchema": [
+    {
+      "AttributeName": "activity_start_end",
+      "KeyType": "HASH"
+    }
+  ],
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "StartIndex",
+      "KeySchema": [
+        {
+          "AttributeName": "start",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "activity_type",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      }
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}
