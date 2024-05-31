@@ -1,30 +1,8 @@
 services:
   local:
-    image: mysql
-    container_name: timetracking_mysql_local_db
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-
+    image: amazon/dynamodb-local
+    container_name: timetracking_dynamodb_local
     ports:
-      - "3306:3306"
+      - "8000:8000"
     volumes:
-      - local_mysql_data:/var/lib/mysql
-  stage:
-    image: mysql
-    container_name: timetracking_mysql_stage_db
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - stage_mysql_data:/var/lib/mysql
-
-volumes:
-  local_mysql_data:
-  stage_mysql_data:
+      - "./data:/home/timetracking_dynamodb_local/data"
