@@ -3,12 +3,14 @@
 # Export time entries from TimeWarrior CLI and return as CSV or JSON stdout 
 
 import sys
+import os
 import csv
 import subprocess
 import json
 import warnings
 from datetime import datetime
 
+export_path = "/home/thomas/repos/lambdas/node-js/time-tracking/exports/timewarrior_export"
 
 def execute_shell_command(command):
     try:
@@ -23,6 +25,10 @@ def execute_shell_command(command):
     except subprocess.CalledProcessError as e:
         return e.stderr.strip()
 
+def get_file_size(file_path):
+    stats = os.stat(file_path)
+    return stats.st_size
+
 
 def seconds_to_digital_time(seconds):
     hours = seconds / 3600
@@ -34,10 +40,10 @@ def get_tw_entries():
     return json.loads(time_entries)
 
 
-def utc_to_sql_stamp(utc):
+def utc_to_iso(utc):
     datetime_obj = datetime.strptime(utc, "%Y%m%dT%H%M%SZ")
-    sql_stamp = datetime_obj.strftime("%Y-%m-%d %H:%M:%S")
-    return sql_stamp
+    iso = datetime_obj.isoformat() + "Z"
+    return iso
 
 
 def get_entry_duration(utc1, utc2):
@@ -63,11 +69,15 @@ def get_tags(tag_list):
 
 
 def export_to_csv(entries):
-    with open("exported_time_entries.csv", mode="w") as export_file:
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%dT%H:%M")
+    filename = '_'.join([export_path, timestamp]) + '.csv'
+    with open(filename, mode="w") as export_file:
         writer = csv.writer(export_file)
         for entry in entries:
             try:
                 csv_row = [
+                    entry.get("id", "null"),
                     entry.get("activity_type", "null"),
                     entry.get("start", "null"),
                     entry.get("end", "null"),
@@ -78,22 +88,24 @@ def export_to_csv(entries):
             except TypeError:
                 print(f"Error: {TypeError}")
 
-        print('Exported time entries to file: exported_time_entries.csv')
+        file_size = get_file_size(filename) / 1000
+        print(f"Exported time entries to file: {filename} ({file_size} KB)")
 
 def export_entries(export_type=None):
     processed = []
     entries = get_tw_entries()
     for entry in entries:
         tags = get_tags(entry["tags"])
-        start_sql_stamp = utc_to_sql_stamp(entry["start"])
-        end_sql_stamp = utc_to_sql_stamp(entry["end"])
+        start_iso_stamp = utc_to_iso(entry["start"])
+        end_iso_stamp = utc_to_iso(entry["end"])
         duration = get_entry_duration(entry["start"], entry["end"])
-
+        id = '_'.join([tags[0], start_iso_stamp, end_iso_stamp]) 
         processed.append(
-            {
+            {   
+                "id": id,
                 "activity_type": tags[0],
-                "start": start_sql_stamp,
-                "end": end_sql_stamp,
+                "start": start_iso_stamp,
+                "end": end_iso_stamp,
                 "duration": duration,
                 "description": tags[1],
             }
