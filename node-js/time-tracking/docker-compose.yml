@@ -1,8 +1,15 @@
 services:
-  local:
+  dev:
     image: amazon/dynamodb-local
-    container_name: timetracking_dynamodb_local
+    container_name: timetracking_dynamodb_dev
     ports:
       - "8000:8000"
     volumes:
-      - "./data:/home/timetracking_dynamodb_local/data"
+      - "./data:/home/timetracking_dynamodb_dev/data"
+  stage:
+    image: amazon/dynamodb-local
+    container_name: timetracking_dynamodb_stage
+    ports:
+      - "8001:8001"
+    volumes:
+      - "./data:/home/timetracking_dynamodb_stage/data"
