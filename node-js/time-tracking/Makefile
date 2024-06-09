@@ -6,8 +6,11 @@ clean:
 build:
 	sam build
 
-start: 
-	make build && sam local start-api --docker-network host --port 3000 --env-vars /home/thomas/repos/lambdas/node-js/time-tracking/env/local.env.json
+start-dev: 
+	make build && sam local start-api --docker-network time-tracking_sam-local --env-vars /home/thomas/repos/lambdas/node-js/time-tracking/env/dev.env.json
+
+start-stage: 
+	make build && sam local start-api --docker-network time-tracking_sam-local --env-vars /home/thomas/repos/lambdas/node-js/time-tracking/env/stage.env.json
 
 deploy: 
 	make build && sam deploy	

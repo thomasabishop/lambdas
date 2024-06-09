@@ -27,10 +27,9 @@ Resources:
             Method: post
       Environment:
         Variables:
-          DB_NAME:
-          DB_ROOT_PASSWORD:
-          DB_USER:
-          DB_PASSWORD:
+          DB_ENDPOINT:
+          ACCESS_KEY:
+          SECRET_KEY:
     Metadata: # Manage esbuild properties
       BuildMethod: esbuild
       BuildProperties:

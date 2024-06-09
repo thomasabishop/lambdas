@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   dev:
     image: amazon/dynamodb-local
@@ -5,11 +6,19 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./data:/home/timetracking_dynamodb_dev/data"
+      - "./data:/home/dynamodblocal/data"
+    networks:
+      - sam-local
   stage:
     image: amazon/dynamodb-local
     container_name: timetracking_dynamodb_stage
     ports:
       - "8001:8001"
     volumes:
-      - "./data:/home/timetracking_dynamodb_stage/data"
+      - "./data:/home/dynamodblocal/data"
+    networks:
+      - sam-local
+
+networks:
+  sam-local:
+    driver: bridge
