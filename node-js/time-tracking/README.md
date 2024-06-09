@@ -1,17 +1,30 @@
-# Tracklog
+# Time Tracking
 
 ## Local development
 
-### Start local MySQL database via docker
+### Start local DynamoDB database via docker
 
-There are two local MySQL instances:
+There is a container for two local DynamoDB instances and a local bridging network (`time-tracking_sam-local`) managed via Docker Compose:
 
-| Instance | Purpose                                          |
-| -------- | ------------------------------------------------ |
-| `local`  | Breakable local development database             |
-| `stage`  | Migrated pristine clone of current production DB |
+| Instance | Container name              | Port  | Purpose                                          |
+| -------- | --------------------------- | ----- | ------------------------------------------------ |
+| `dev`    | `timetracking_dynamodb_dev` | 8000  | Breakable local development database             |
+| `stage`  | `timetracking_dynamodb_dev` | 80001 | Migrated pristine clone of current production DB |
 
-#### Prerequisites
+Start up either container:
+
+```sh
+docker-compose up dev
+docker-compose up stage
+```
+
+Or both at once:
+
+```sh
+docker compose up
+```
+
+#### Prerequisites (Linux)
 
 ```sh
 # Docker background services working
@@ -20,51 +33,29 @@ systemctl enable docker.service
 systemctl start docker.service
 ```
 
-```sh
-docker-compose up [local/stage]
-```
-
 ### Start API Gateway
 
+For each local DynamoDB instance there is a corresponding command to run the local API Gateway against it:
+
 ```sh
-make start
+make start-dev
+make start-stage
 ```
 
-### Connection
+This command sources the requisite env vars, starts the SAM container and ensures it is on the same Docker bridging network as the DynamoDB instance, e.g. equivalent to:
 
-When connecting to the local DB it is necessary to use the IP address of the
-Docker network rather than `localhost`. Otherwise the lambda will return a
-connection error.
-
-This is typically `172.17.0.1` but may change. Identify the current address
-with:
-
-```bash
-ip addr show | grep docker0
+```sh
+make build &&
+sam local start-api --docker-network time-tracking_sam-local --env-vars ./env/dev.env.json
 ```
 
-Therefore, the local connection parameters:
+The local Gatweway endpoint for each is `http://127.0.0.1:3000`
 
-```js
-const connection = await mysql.createConnection({
-  host: "172.17.0.1",
-  user: process.env.DB_USER,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-});
-```
+## Environment variables
 
-## Database
-
-- Database credentials managed via env vars both locally and in production
-
-- Local, development database handled via Docker and AWS SAM
-
-- When deploying to prod, database credentials must be provided as parameters:
-
-  ```
-    aws cloud formation deploy --template-file template.yaml --stack-name
-    my-stack --parameter-overrides DBUsername='username' DBPassword='password'
-  ```
-
-  > These are the credentials used to create the initial administrator account when an RDS instance is provisioned. Access to an RDS database requires a username and password for connection. This is independent of AWS IAM roles and permissions and is specific to the database itself.
+| Variable        | Description                                     |
+| --------------- | ----------------------------------------------- |
+| `AWS_SAM_LOCAL` | Native to SAM. Determine if prod or dev runtime |
+| `DB_ENDPOINT`   | Endpoint of DynamoDB database                   |
+| `ACCESS_KEY`    | Access key ID                                   |
+| `SECRET_KEY`    | Secret access key                               |
