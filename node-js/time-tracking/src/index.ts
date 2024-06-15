@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { ITimeEntry, getTimeEntries } from "./lib/getTimeEntries"
-import { addTimeEntries } from "./lib/addEntries"
+import { addTimeEntries } from "./lib/addTimeEntries"
 import { buildHttpResponse } from "./lib/buildHttpResponse"
 import { client } from "./lib/connect"
 import { TPeriod } from "./lib/generateDates"
