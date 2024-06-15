@@ -45,6 +45,9 @@ def utc_to_iso(utc):
     iso = datetime_obj.isoformat() + "Z"
     return iso
 
+def extractYear(utc):
+    datetime_obj = datetime.strptime(utc, "%Y%m%dT%H%M%SZ")
+    return datetime_obj.strftime('%Y')
 
 def get_entry_duration(utc1, utc2):
     utc1_object = datetime.strptime(utc1, "%Y%m%dT%H%M%SZ")
@@ -83,6 +86,7 @@ def export_to_csv(entries):
                     entry.get("end", "null"),
                     entry.get("duration", "null"),
                     entry.get("description", "null"),
+                    entry.get("year", "null"),
                 ]
                 writer.writerow(csv_row)
             except TypeError:
@@ -100,6 +104,7 @@ def export_entries(export_type=None):
         end_iso_stamp = utc_to_iso(entry["end"])
         duration = get_entry_duration(entry["start"], entry["end"])
         id = '_'.join([tags[0], start_iso_stamp, end_iso_stamp]) 
+        year = extractYear(entry["start"]) 
         processed.append(
             {   
                 "id": id,
@@ -108,6 +113,7 @@ def export_entries(export_type=None):
                 "end": end_iso_stamp,
                 "duration": duration,
                 "description": tags[1],
+                "year": year
             }
         )
 
