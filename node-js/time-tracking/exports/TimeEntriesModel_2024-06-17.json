@@ -3,7 +3,7 @@
   "ModelMetadata": {
     "Author": "Thomas Bishop",
     "DateCreated": "May 31, 2024, 11:07 AM",
-    "DateLastModified": "Jun 14, 2024, 11:04 AM",
+    "DateLastModified": "Jun 15, 2024, 09:32 AM",
     "Description": "",
     "AWSService": "Amazon DynamoDB",
     "Version": "3.0"
@@ -11028,6 +11028,535 @@
           },
           "description": {
             "S": "time warrior waybar integration"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-05-31T16:57:38Z_2024-05-31T19:29:55Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-05-31T16:57:38Z"
+          },
+          "end": {
+            "S": "2024-05-31T19:29:55Z"
+          },
+          "duration": {
+            "N": "2.54"
+          },
+          "description": {
+            "S": "research pi-hole"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Blogging_2024-06-03T15:18:44Z_2024-06-03T18:24:54Z"
+          },
+          "activity_type": {
+            "S": "Blogging"
+          },
+          "start": {
+            "S": "2024-06-03T15:18:44Z"
+          },
+          "end": {
+            "S": "2024-06-03T18:24:54Z"
+          },
+          "duration": {
+            "N": "3.1"
+          },
+          "description": {
+            "S": "N2T unit two"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Blogging_2024-06-04T06:20:22Z_2024-06-04T06:51:46Z"
+          },
+          "activity_type": {
+            "S": "Blogging"
+          },
+          "start": {
+            "S": "2024-06-04T06:20:22Z"
+          },
+          "end": {
+            "S": "2024-06-04T06:51:46Z"
+          },
+          "duration": {
+            "N": "0.52"
+          },
+          "description": {
+            "S": "N2T unit two"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-04T15:45:57Z_2024-06-04T15:55:34Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-04T15:45:57Z"
+          },
+          "end": {
+            "S": "2024-06-04T15:55:34Z"
+          },
+          "duration": {
+            "N": "0.16"
+          },
+          "description": {
+            "S": "electronics exercises"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-04T16:03:06Z_2024-06-04T17:46:27Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-04T16:03:06Z"
+          },
+          "end": {
+            "S": "2024-06-04T17:46:27Z"
+          },
+          "duration": {
+            "N": "1.72"
+          },
+          "description": {
+            "S": "electronics exercises"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Blogging_2024-06-05T06:16:44Z_2024-06-05T07:15:57Z"
+          },
+          "activity_type": {
+            "S": "Blogging"
+          },
+          "start": {
+            "S": "2024-06-05T06:16:44Z"
+          },
+          "end": {
+            "S": "2024-06-05T07:15:57Z"
+          },
+          "duration": {
+            "N": "0.99"
+          },
+          "description": {
+            "S": "N2T unit two"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-06T16:41:15Z_2024-06-06T17:34:22Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-06T16:41:15Z"
+          },
+          "end": {
+            "S": "2024-06-06T17:34:22Z"
+          },
+          "duration": {
+            "N": "0.89"
+          },
+          "description": {
+            "S": "js exercise"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-08T09:00:00Z_2024-06-08T13:00:00Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-08T09:00:00Z"
+          },
+          "end": {
+            "S": "2024-06-08T13:00:00Z"
+          },
+          "duration": {
+            "N": "4.0"
+          },
+          "description": {
+            "S": "set up Pi-hole"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-08T14:00:00Z_2024-06-08T15:00:00Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-08T14:00:00Z"
+          },
+          "end": {
+            "S": "2024-06-08T15:00:00Z"
+          },
+          "duration": {
+            "N": "1.0"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-09T10:00:00Z_2024-06-09T13:00:00Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-09T10:00:00Z"
+          },
+          "end": {
+            "S": "2024-06-09T13:00:00Z"
+          },
+          "duration": {
+            "N": "3.0"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-09T15:00:00Z_2024-06-09T16:00:00Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-09T15:00:00Z"
+          },
+          "end": {
+            "S": "2024-06-09T16:00:00Z"
+          },
+          "duration": {
+            "N": "1.0"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-10T06:23:45Z_2024-06-10T06:52:07Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-10T06:23:45Z"
+          },
+          "end": {
+            "S": "2024-06-10T06:52:07Z"
+          },
+          "duration": {
+            "N": "0.47"
+          },
+          "description": {
+            "S": "dynamodb"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-10T16:30:29Z_2024-06-10T17:33:03Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-10T16:30:29Z"
+          },
+          "end": {
+            "S": "2024-06-10T17:33:03Z"
+          },
+          "duration": {
+            "N": "1.04"
+          },
+          "description": {
+            "S": "dynamodb"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Chore_2024-06-10T17:33:12Z_2024-06-10T17:59:47Z"
+          },
+          "activity_type": {
+            "S": "Chore"
+          },
+          "start": {
+            "S": "2024-06-10T17:33:12Z"
+          },
+          "end": {
+            "S": "2024-06-10T17:59:47Z"
+          },
+          "duration": {
+            "N": "0.44"
+          },
+          "description": {
+            "S": "debugging Pi-hole"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-10T18:00:32Z_2024-06-10T18:06:47Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-10T18:00:32Z"
+          },
+          "end": {
+            "S": "2024-06-10T18:06:47Z"
+          },
+          "duration": {
+            "N": "0.1"
+          },
+          "description": {
+            "S": "dynamodb"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Chore_2024-06-12T15:55:52Z_2024-06-12T17:48:36Z"
+          },
+          "activity_type": {
+            "S": "Chore"
+          },
+          "start": {
+            "S": "2024-06-12T15:55:52Z"
+          },
+          "end": {
+            "S": "2024-06-12T17:48:36Z"
+          },
+          "duration": {
+            "N": "1.88"
+          },
+          "description": {
+            "S": "debugging Pi-hole"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Study_2024-06-12T17:48:49Z_2024-06-12T19:47:52Z"
+          },
+          "activity_type": {
+            "S": "Study"
+          },
+          "start": {
+            "S": "2024-06-12T17:48:49Z"
+          },
+          "end": {
+            "S": "2024-06-12T19:47:52Z"
+          },
+          "duration": {
+            "N": "1.98"
+          },
+          "description": {
+            "S": "electronics exercises"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Blogging_2024-06-13T14:53:09Z_2024-06-13T15:16:08Z"
+          },
+          "activity_type": {
+            "S": "Blogging"
+          },
+          "start": {
+            "S": "2024-06-13T14:53:09Z"
+          },
+          "end": {
+            "S": "2024-06-13T15:16:08Z"
+          },
+          "duration": {
+            "N": "0.38"
+          },
+          "description": {
+            "S": "N2T unit two"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-13T17:55:31Z_2024-06-13T18:57:37Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-13T17:55:31Z"
+          },
+          "end": {
+            "S": "2024-06-13T18:57:37Z"
+          },
+          "duration": {
+            "N": "1.03"
+          },
+          "description": {
+            "S": "circuit design"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-14T08:01:35Z_2024-06-14T15:43:45Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-14T08:01:35Z"
+          },
+          "end": {
+            "S": "2024-06-14T15:43:45Z"
+          },
+          "duration": {
+            "N": "7.7"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-15T08:02:05Z_2024-06-15T08:13:53Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-15T08:02:05Z"
+          },
+          "end": {
+            "S": "2024-06-15T08:13:53Z"
+          },
+          "duration": {
+            "N": "0.2"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-15T08:13:53Z_2024-06-15T08:22:00Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-15T08:13:53Z"
+          },
+          "end": {
+            "S": "2024-06-15T08:22:00Z"
+          },
+          "duration": {
+            "N": "0.14"
+          },
+          "description": {
+            "S": "time entries redux"
+          },
+          "year": {
+            "S": "2024"
+          }
+        },
+        {
+          "activity_start_end": {
+            "S": "Project_2024-06-15T08:22:00Z_2024-06-15T08:23:30Z"
+          },
+          "activity_type": {
+            "S": "Project"
+          },
+          "start": {
+            "S": "2024-06-15T08:22:00Z"
+          },
+          "end": {
+            "S": "2024-06-15T08:23:30Z"
+          },
+          "duration": {
+            "N": "0.03"
+          },
+          "description": {
+            "S": "time entries redux"
           },
           "year": {
             "S": "2024"
