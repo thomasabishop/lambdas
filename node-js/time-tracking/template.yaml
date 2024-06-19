@@ -1,9 +1,16 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description:
+
 Globals:
   Function:
     Timeout: 3
+
+Parameters:
+  DynamoDBTableName:
+    Type: String
+    Default: "TimeEntries"
+    Description: ""
 
 Resources:
   TimeTrackingFunction:
@@ -35,7 +42,8 @@ Resources:
                 - "dynamodb:GetItem"
                 - "dynamodb:Query"
                 - "dynamodb:Scan"
-              Resource: "arn:aws:dynamodb:eu-west-2:885135949562:table/TimeEntries"
+              Resource:
+                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName}"
       Environment:
         Variables:
           DB_ENDPOINT: ""
