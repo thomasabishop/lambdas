@@ -25,11 +25,22 @@ Resources:
           Properties:
             Path: /update
             Method: post
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Action:
+                - "dynamodb:PutItem"
+                - "dynamodb:UpdateItem"
+                - "dynamodb:GetItem"
+                - "dynamodb:Query"
+                - "dynamodb:Scan"
+              Resource: "arn:aws:dynamodb:eu-west-2:885135949562:table/TimeEntries"
       Environment:
         Variables:
-          DB_ENDPOINT:
-          ACCESS_KEY:
-          SECRET_KEY:
+          DB_ENDPOINT: ""
+          ACCESS_KEY: ""
+          SECRET_KEY: ""
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
