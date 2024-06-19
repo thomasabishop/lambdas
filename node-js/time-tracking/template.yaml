@@ -1,16 +1,16 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description:
-
+Description: >
+  time-tracking
 Globals:
   Function:
-    Timeout: 3
+    Timeout: 10
 
 Parameters:
   DynamoDBTableName:
     Type: String
     Default: "TimeEntries"
-    Description: ""
+    Description: "Name of DynamoDB table"
 
 Resources:
   TimeTrackingFunction:
@@ -42,8 +42,7 @@ Resources:
                 - "dynamodb:GetItem"
                 - "dynamodb:Query"
                 - "dynamodb:Scan"
-              Resource:
-                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName}"
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName}"
       Environment:
         Variables:
           DB_ENDPOINT: ""
@@ -62,9 +61,9 @@ Outputs:
   TimeTrackingApi:
     Description: "API Gateway endpoint URL for TimeTracking function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/time-tracking/"
-  TimeTrackingFunction:
+  TimeTrackingFunctionArn:
     Description: "Time Tracking Lambda Function ARN"
     Value: !GetAtt TimeTrackingFunction.Arn
   TimeTrackingFunctionIamRole:
-    Description: "Implicit IAM Role created for Time Trcking function"
+    Description: "Implicit IAM Role created for Time Tracking function"
     Value: !GetAtt TimeTrackingFunctionRole.Arn
