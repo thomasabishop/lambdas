@@ -35,6 +35,10 @@ def calculate_decimal_duration(iso1, iso2):
     difference_seconds = time_difference.total_seconds()
     return seconds_to_digital_time(difference_seconds)
 
+def extract_year(date):
+    datetime_obj = datetime.strptime(date, "%Y-%m-%d")
+    year = datetime_obj.year
+    return year
 
 if __name__ == "__main__":
     path = sys.argv[1]
@@ -51,8 +55,9 @@ if __name__ == "__main__":
                 end = convert_to_iso(row["end_date"], row["end_time"])
                 duration = calculate_decimal_duration(start, end)
                 id = '_'.join([row["activity"], start, end])
+                year = extract_year(row["start_date"])
                 updated_rows.append(
-                    [id, row["activity"], start, end, duration, row["description"]]
+                    [id, row["activity"], start, end, duration, row["description"], year]
                 )
             line += 1
     with open(filename, mode="w") as export:
