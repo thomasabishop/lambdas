@@ -3,96 +3,70 @@
 ## Data model
 
 Time entries are stored in a single DynamoDB database table named `TimeEntries`.
-Below is an example entry:
+
+This table is an instance of the following model:
 
 ```json
- {
-    activity_start_end: 'Study_2024-05-21T06:15:00Z_2024-05-21T07:00:00Z',
-    year: '2024'
-    activity_type: 'Study'
-    start: '2024-05-21T06:15:00Z',
-    end: '2024-05-21T07:00:00Z',
-    duration: 0.75,
-    description: 'electronics book',
-  }
-```
-
-This table is an instance of the `TimeEntriesModel` defined as follows:
-
-```json
-"DataModel": [
+{
+  "TableName": "TimeEntries",
+  "AttributeDefinitions": [
+    { "AttributeName": "activity_start_end", "AttributeType": "S" },
+    { "AttributeName": "year", "AttributeType": "S" },
+    { "AttributeName": "start", "AttributeType": "S" }
+  ],
+  "KeySchema": [{ "AttributeName": "activity_start_end", "KeyType": "HASH" }],
+  "GlobalSecondaryIndexes": [
     {
-      "TableName": "TimeEntries",
-      "KeyAttributes": {
-        "PartitionKey": {
-          "AttributeName": "activity_start_end",
-          "AttributeType": "S"
-        }
+      "IndexName": "YearIndex",
+      "KeySchema": [
+        { "AttributeName": "year", "KeyType": "HASH" },
+        { "AttributeName": "start", "KeyType": "RANGE" }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
       },
-      "NonKeyAttributes": [
-        {
-          "AttributeName": "activity_type",
-          "AttributeType": "S"
-        },
-        {
-          "AttributeName": "start",
-          "AttributeType": "S"
-        },
-        {
-          "AttributeName": "end",
-          "AttributeType": "S"
-        },
-        {
-          "AttributeName": "duration",
-          "AttributeType": "N"
-        },
-        {
-          "AttributeName": "description",
-          "AttributeType": "S"
-        },
-        {
-          "AttributeName": "year",
-          "AttributeType": "S"
-        }
-      ],
-      "GlobalSecondaryIndexes": [
-        {
-          "IndexName": "YearIndex",
-          "KeyAttributes": {
-            "PartitionKey": {
-              "AttributeName": "year",
-              "AttributeType": "S"
-            },
-            "SortKey": {
-              "AttributeName": "start",
-              "AttributeType": "S"
-            }
-          },
-          "Projection": {
-            "ProjectionType": "ALL"
-          }
-        }
-      ],
-
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      }
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}
 ```
 
-The primary key is `activity_start_end` which concatenates the attributes
-`activity`, `start`, and `end` to create a unique value.
+### Key attributes:
 
-There is one global secondary index comprising `year` as the hash key and
-`start` as the range key. Chunking entries by smaller year
-ranges is designed to improve retrieval time and reduce resource costs.
+- `activity_start_end`
+  - primary key (partition key)
+  - unique
+- `year`
+  - global secondary index (GSI) key
+  - entries can be chunked by year improving retrieval time and reducing
+    query times and cost
+- `start`
+  - main sort key for both primary key and GSI
+
+### Non-key attributes:
+
+- `activity_type`
+- `end`
+- `duration`
+- `description`
 
 ## Local development
 
-### Start local DynamoDB database via docker
+### Start local DynamoDB database via Docker
 
 There is a container for two local DynamoDB instances and a local bridging network (`time-tracking_sam-local`) managed via Docker Compose:
 
-| Instance | Container name              | Port  | Purpose                                          |
-| -------- | --------------------------- | ----- | ------------------------------------------------ |
-| `dev`    | `timetracking_dynamodb_dev` | 8000  | Breakable local development database             |
-| `stage`  | `timetracking_dynamodb_dev` | 80001 | Migrated pristine clone of current production DB |
+| Instance | Database name       | Container name              | Port | Purpose                              |
+| -------- | ------------------- | --------------------------- | ---- | ------------------------------------ |
+| `dev`    | `timetracking_dev`  | `timetracking_dynamodb_dev` | 8000 | Breakable local development database |
+| `stage`  | `timetracking_prod` | `timetracking_dynamodb_dev` | 8001 | Clone of current production DB       |
 
 Start up either container:
 
@@ -116,6 +90,22 @@ systemctl enable docker.service
 systemctl start docker.service
 ```
 
+#### Database endpoints (lambda and CLI differences)
+
+During the runtime of the lambda on the bridging network, the databases are reachable at `http://dev:8000` and `http://stage:8001`.
+
+However, when interacting with the databases via the `aws-cli` the port is the
+same but the hostname is `localhost`, e.g: `http://localhost:8000`,
+`http://localhost:8001`.
+
+So it is important to specify the local URL when using the CLI, e.g:
+
+```sh
+aws dynamodb list-tables \
+    --profile timetracking_dev \
+    --endpoint-url http://localhost:8000
+```
+
 ### Start API Gateway
 
 For each local DynamoDB instance there is a corresponding command to run the local API Gateway against it:
@@ -132,7 +122,41 @@ make build &&
 sam local start-api --docker-network time-tracking_sam-local --env-vars ./env/dev.env.json
 ```
 
-The local Gatweway endpoint for each is `http://127.0.0.1:3000`
+#### Routes
+
+The API Gateway server runs at `http://127.0.0.1:3000`
+
+It exposes two endpoints:
+
+| HTTP | Endpoint  | Query params                                            |
+| ---- | --------- | ------------------------------------------------------- |
+| GET  | `/fetch`  | `period` (values: `week`, `fortnight`, `month`, `year`) |
+| POST | `/update` |                                                         |
+
+`/update` expects an array of time entries matching the model defined above. For
+example:
+
+```json
+ [{
+    activity_start_end: 'Study_2024-05-21T06:15:00Z_2024-05-21T07:00:00Z',
+    year: '2024'
+    activity_type: 'Study'
+    start: '2024-05-21T06:15:00Z',
+    end: '2024-05-21T07:00:00Z',
+    duration: 0.75,
+    description: 'electronics book',
+  }]
+```
+
+## Additional infrastructure
+
+This lambda is only concerned with retrieving and adding entries to the
+database. It assumes the pre-existence of the databases and tables.
+
+There is additional infrastructure responsible for creating, seeding, and
+migrating the database and exporting my time entries from the [Timewarrior](https://timewarrior.net/) program I run locally on my machine.
+
+This is managed in the `/scripts` directory...
 
 ## Environment variables
 
@@ -142,3 +166,6 @@ The local Gatweway endpoint for each is `http://127.0.0.1:3000`
 | `DB_ENDPOINT`   | Endpoint of DynamoDB database                   |
 | `ACCESS_KEY`    | Access key ID                                   |
 | `SECRET_KEY`    | Secret access key                               |
+
+`DB_ENDPOINT` is only required when working with the local databass. The region
+and credentials are sufficient to connect to the production database.
