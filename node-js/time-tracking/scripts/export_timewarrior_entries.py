@@ -1,6 +1,8 @@
 #! /usr/local/bin/python3
 
-# Export time entries from TimeWarrior CLI and return as CSV or JSON stdout 
+# Export time entries (all or daily) from TimeWarrior CLI and return as CSV or JSON stdout 
+# eg: python3 ./export_timewarrior_entries.py json today
+# eg: python3 ./export_timewarrior_entries.py csv 
 
 import sys
 import os
@@ -35,8 +37,13 @@ def seconds_to_digital_time(seconds):
     return round(hours, 2)
 
 
-def get_tw_entries():
-    time_entries = execute_shell_command("timew export")
+def get_tw_entries(period):
+    if period == 'today':
+        time_entries = execute_shell_command("timew export :today")
+
+    else:
+        time_entries = execute_shell_command("timew export")
+
     return json.loads(time_entries)
 
 
@@ -95,9 +102,10 @@ def export_to_csv(entries):
         file_size = get_file_size(filename) / 1000
         print(f"Exported time entries to file: {filename} ({file_size} KB)")
 
-def export_entries(export_type=None):
+def export_entries(export_type=None, period=None):
     processed = []
-    entries = get_tw_entries()
+    entries = get_tw_entries(period)
+
     for entry in entries:
         tags = get_tags(entry["tags"])
         start_iso_stamp = utc_to_iso(entry["start"])
@@ -119,12 +127,16 @@ def export_entries(export_type=None):
 
     if export_type == "csv":
         return export_to_csv(processed)
-    else:
+    
+    if export_type == "json":
         return processed 
+    
     
 
 def main():
-    export_type = sys.argv[1] if len(sys.argv) > 1 else None
+    export_type = sys.argv[1]
+    period = sys.argv[2] if len(sys.argv) > 2 else None
+    
     try:
         active = False
 
@@ -132,7 +144,7 @@ def main():
             active = True
             execute_shell_command("timew stop")
 
-        export = export_entries(export_type)
+        export = export_entries(export_type, period)
         print(export)
 
         if active:
