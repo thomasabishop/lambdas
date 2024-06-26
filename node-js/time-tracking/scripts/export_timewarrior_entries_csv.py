@@ -1,13 +1,14 @@
 #! /usr/local/bin/python3
 
 """
-Export time entries (all or daily) from TimeWarrior CLI and return as JSON to stdout 
+Export time entries (all or daily) from TimeWarrior CLI and return as CSV file 
 e.g:
-    python3 ./export_timewarrior_entries.py (all)
-    python3 ./export_timewarrior_entries.py today (just today's)
+    python3 ./export_timewarrior_entries.py csv (all)
+    python3 ./export_timewarrior_entries.py csv today (just today's)
 """
 
 import sys
+import csv
 import subprocess
 import json
 import warnings
@@ -70,6 +71,30 @@ def get_tags(tag_list):
         return ["null", "null"]
 
 
+def export_to_csv(entries):
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%dT%H:%M")
+    filename = "_".join([export_path, timestamp]) + ".csv"
+    with open(filename, mode="w") as export_file:
+        writer = csv.writer(export_file)
+        for entry in entries:
+            try:
+                csv_row = [
+                    entry.get("activity_start_end", "null"),
+                    entry.get("activity_type", "null"),
+                    entry.get("start", "null"),
+                    entry.get("end", "null"),
+                    entry.get("duration", "null"),
+                    entry.get("description", "null"),
+                    entry.get("year", "null"),
+                ]
+                writer.writerow(csv_row)
+            except TypeError:
+                print(f"Error: {TypeError}")
+
+        print(f"Exported time entries to file: {filename}")
+
+
 def get_tw_entries(period):
     if period == "today":
         time_entries = execute_shell_command("timew export :today")
@@ -102,7 +127,7 @@ def export_entries(period=None):
                 "year": year,
             }
         )
-    return json.dumps(processed)
+    return export_to_csv(processed)
 
 
 def main():
@@ -115,8 +140,7 @@ def main():
             active = True
             execute_shell_command("timew stop")
 
-        export = export_entries(period)
-        print(export)
+        export_entries(period)
 
         if active:
             execute_shell_command("timew continue")
