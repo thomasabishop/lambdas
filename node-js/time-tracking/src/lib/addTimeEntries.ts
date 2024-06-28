@@ -36,7 +36,13 @@ const addTimeEntries = async (client: DynamoDBClient, items: ITimeEntry[]) => {
          }
 
          await documentClient.send(new BatchWriteCommand(params))
-         return buildHttpResponse(200, `${items?.length} items added to TimeEntries table`)
+         return buildHttpResponse(200, {
+            summary: `${items?.length} item(s) added to TimeEntries table`,
+            entries: items.map((item) => ({
+               duration: item.duration,
+               description: item.description,
+            })),
+         })
       } catch (err) {
          return buildHttpResponse(400, `Items could not be added to TimeEntries table: ${err} `)
       }
