@@ -37,6 +37,6 @@ while IFS=, read -r -a arr; do
             aws dynamodb execute-statement --statement "$query" --profile timetracking_prod ;;  
     esac
 
-    sleep 2
+    sleep 3
 
 done < "$csv_import"
