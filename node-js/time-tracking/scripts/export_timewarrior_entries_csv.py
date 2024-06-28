@@ -1,10 +1,11 @@
 #! /usr/local/bin/python3
 
 """
-Export time entries (all or daily) from TimeWarrior CLI and return as CSV file 
+Export time entries (daily, weekly, or all) from TimeWarrior CLI and return as CSV file 
 e.g:
     python3 ./export_timewarrior_entries.py csv (all)
     python3 ./export_timewarrior_entries.py csv today (just today's)
+    python3 ./export_timewarrior_entries.py csv week 
 """
 
 import sys
@@ -98,7 +99,8 @@ def export_to_csv(entries):
 def get_tw_entries(period):
     if period == "today":
         time_entries = execute_shell_command("timew export :today")
-
+    elif period == "week":
+        time_entries = execute_shell_command("timew export :week")
     else:
         time_entries = execute_shell_command("timew export")
 
