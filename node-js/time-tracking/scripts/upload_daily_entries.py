@@ -18,7 +18,7 @@ def slack_blocks(summary, entries):
             entry_blocks.append(
                 {
                     "type": "mrkdwn",
-                    "text": f"_{entry["description"]}_ ({entry["duration"]} hrs)",
+                    "text": f"_{entry['description']}_ ({entry['duration']} hrs)",
                 }
             )
 
@@ -60,7 +60,6 @@ if __name__ == "__main__":
             slack_message = slack_blocks(
                 response["data"]["summary"], response["data"]["entries"]
             )
-
             subprocess.run(
                 [SLACK_NOTIFIER_SCRIPT, "time_tracking", "", json.dumps(slack_message)]
             )
