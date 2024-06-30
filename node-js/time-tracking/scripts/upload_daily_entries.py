@@ -9,7 +9,7 @@ import json
 import os
 import sys
 
-LAMBDA_ENDPOINT = os.getenv("ENDPOINT")
+LAMBDA_ENDPOINT = os.getenv("UPLOAD_DAILY_TIME_ENTRIES_EP")
 SLACK_NOTIFIER_SCRIPT = "/home/thomas/repos/slack-notifier/src/index.js"
 
 
