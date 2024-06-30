@@ -71,12 +71,7 @@ def get_tags(tag_list):
 
 
 def get_tw_entries(period):
-    if period == "today":
-        time_entries = execute_shell_command("timew export :today")
-
-    else:
-        time_entries = execute_shell_command("timew export")
-
+    time_entries = execute_shell_command(f"timew export :{period}")
     return json.loads(time_entries)
 
 
@@ -107,7 +102,6 @@ def export_entries(period=None):
 
 def main():
     period = sys.argv[1] if len(sys.argv) > 1 else None
-
     try:
         active = False
 
