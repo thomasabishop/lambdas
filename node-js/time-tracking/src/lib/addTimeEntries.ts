@@ -18,24 +18,34 @@ const schema = Joi.array().items({
 const addTimeEntries = async (client: DynamoDBClient, items: ITimeEntry[]) => {
    const { error } = schema.validate(items)
    if (error) {
-      console.error("Problem with request body:", items)
-      return buildHttpResponse(400, error?.details)
+      console.error("Problem with request body:", error?.details)
+      return buildHttpResponse(400, JSON.stringify(error?.details))
    } else {
       try {
          const documentClient = DynamoDBDocumentClient.from(client)
-         const putRequests = items.map((item: ITimeEntry) => ({
-            PutRequest: {
-               Item: item,
-            },
-         }))
 
-         const params = {
-            RequestItems: {
-               ["TimeEntries"]: putRequests,
-            },
+         const chunkSize = 25
+         const chunks = []
+         for (let i = 0; i < items.length; i += chunkSize) {
+            chunks.push(items.slice(i, i + chunkSize))
          }
 
-         await documentClient.send(new BatchWriteCommand(params))
+         for (const chunk of chunks) {
+            const putRequests = chunk.map((item) => ({
+               PutRequest: {
+                  Item: item,
+               },
+            }))
+
+            const params = {
+               RequestItems: {
+                  ["TimeEntries"]: putRequests,
+               },
+            }
+
+            await documentClient.send(new BatchWriteCommand(params))
+         }
+
          return buildHttpResponse(200, {
             summary: `${items?.length} item(s) added to TimeEntries table`,
             entries: items.map((item) => ({
