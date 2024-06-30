@@ -47,7 +47,7 @@ const addTimeEntries = async (client: DynamoDBClient, items: ITimeEntry[]) => {
          }
 
          return buildHttpResponse(200, {
-            summary: `${items?.length} item(s) added to TimeEntries table`,
+            summary: `${items?.length} item(s) added to remote TimeEntries table`,
             entries: items.map((item) => ({
                duration: item.duration,
                description: item.description,
