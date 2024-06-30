@@ -3,6 +3,8 @@
 # Read each item in import CSV and update table for specified deployment environment
 # Throttle to one insertion every 5s
 
+# Eg. python3 seed_tables.sh dev /csv/location
+
 environment=$1
 csv_import="$2"
 
@@ -31,10 +33,10 @@ while IFS=, read -r -a arr; do
     case $environment in
         'dev' )
             aws dynamodb execute-statement --statement "$query" --profile timetracking_dev --endpoint-url http://localhost:8000 ;;
-        'stage' )
-            aws dynamodb execute-statement --statement "$query" --profile timetracking_dev --endpoint-url http://localhost:8001 ;;
+        'prod' )
+            aws dynamodb execute-statement --statement "$query" --profile timetracking_prod ;;
         *)
-            aws dynamodb execute-statement --statement "$query" --profile timetracking_prod ;;  
+            echo "No deployment environment specified" ;;
     esac
 
     sleep 3
