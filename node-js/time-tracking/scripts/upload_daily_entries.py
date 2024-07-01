@@ -46,7 +46,6 @@ def post(data, endpoint):
         response = requests.post(endpoint, json=data)
         response.raise_for_status()
     except requests.exceptions.HTTPError as err_http:
-        print(response.json())
         return f"HTTP Error: {err_http}"
     except requests.exceptions.Timeout as err_timeout:
         return f"Timeout Error: {err_timeout}"
