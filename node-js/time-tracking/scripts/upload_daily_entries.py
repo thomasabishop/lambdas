@@ -9,8 +9,8 @@ import json
 import os
 import sys
 
-LAMBDA_ENDPOINT = os.getenv("UPLOAD_DAILY_TIME_ENTRIES_EP")
-SLACK_NOTIFIER_SCRIPT = "/home/thomas/repos/slack-notifier/src/index.js"
+lambda_endpoint = os.getenv("UPLOAD_DAILY_TIME_ENTRIES_EP")
+slack_notifier_script = "/home/thomas/repos/slack-notifier/src/index.js"
 
 
 def slack_blocks(summary, entries):
@@ -65,13 +65,13 @@ if __name__ == "__main__":
         )
         if daily_entries.stdout:
             data = json.loads(daily_entries.stdout.decode("utf-8"))
-            response = post(data, LAMBDA_ENDPOINT)
+            response = post(data, lambda_endpoint)
             print(response)
             slack_message = slack_blocks(
                 response["data"]["summary"], response["data"]["entries"]
             )
             subprocess.run(
-                [SLACK_NOTIFIER_SCRIPT, "time_tracking", "", json.dumps(slack_message)]
+                [slack_notifier_script, "time_tracking", "", json.dumps(slack_message)]
             )
     except Exception as e:
         print(f"Error uploading time entries data: {e}")
