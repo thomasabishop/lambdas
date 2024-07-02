@@ -5,18 +5,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "/home/thomas/repos/lambdas/node-js/time-tracking/data:/home/dynamodblocal/data"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
-    networks:
-      - sam-local
-  stage:
-    image: amazon/dynamodb-local
-    container_name: timetracking_dynamodb_stage
-    ports:
-      - "8001:8001"
-    volumes:
-      - "./data:/home/dynamodblocal/data"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
+      - "/home/thomas/repos/lambdas/node-js/time-tracking/data/dev:/home/dynamodblocal/data/dev"
+    command: "-jar DynamoDBLocal.jar -dbPath /home/dynamodblocal/data/dev --sharedDb"
     networks:
       - sam-local
 
