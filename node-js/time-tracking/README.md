@@ -133,15 +133,17 @@ It exposes two endpoints:
 example:
 
 ```json
- [{
-    activity_start_end: 'Study_2024-05-21T06:15:00Z_2024-05-21T07:00:00Z',
-    year: '2024'
-    activity_type: 'Study'
-    start: '2024-05-21T06:15:00Z',
-    end: '2024-05-21T07:00:00Z',
-    duration: 0.75,
-    description: 'electronics book',
-  }]
+ [
+  {
+    "activity_start_end": "Study_2024-05-21T06:15:00Z_2024-05-21T07:00:00Z",
+    "year": "2024"
+    "activity_type": "Study"
+    "start": "2024-05-21T06:15:00Z",
+    "end": "2024-05-21T07:00:00Z",
+    "duration": 0.75,
+    "description": "electronics book",
+  }
+ ]
 ```
 
 ## Additional infrastructure
