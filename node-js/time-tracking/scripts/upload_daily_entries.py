@@ -1,16 +1,18 @@
-#! /usr/local/bin/python3
+#!/usr/bin/env python3
 
 # Upload daily time-entries export from Timewarrior to remote DB
-# E.g: ENDPOINT=http://example.com python3 ./upload_daily_entries.py today|week
 
 import subprocess
 import requests
 import json
 import os
 import sys
+from dotenv import load_dotenv
 
+load_dotenv("/home/thomas/.env")
 lambda_endpoint = os.getenv("UPLOAD_DAILY_TIME_ENTRIES_EP")
 slack_notifier_script = "/home/thomas/repos/slack-notifier/src/index.js"
+print(lambda_endpoint)
 
 
 def slack_blocks(summary, entries):
@@ -60,7 +62,11 @@ if __name__ == "__main__":
     period = sys.argv[1] if len(sys.argv) > 1 else "today"
     try:
         daily_entries = subprocess.run(
-            ["python", "./export_timewarrior_entries.py", period],
+            [
+                "python",
+                "/home/thomas/repos/lambdas/node-js/time-tracking/scripts/export_timewarrior_entries.py",
+                period,
+            ],
             capture_output=True,
         )
         if daily_entries.stdout:
