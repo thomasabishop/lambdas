@@ -3,13 +3,17 @@
 SOURCE_PROFILE="timetracking_prod"
 DEST_PROFILE="timetracking_dev"
 TABLE="TimeEntries"
-DEST_TABLE="TimeEntries"  # Make sure this is correct
+DEST_TABLE="TimeEntries" 
 PAGE_SIZE=500
 MAX_ITEMS=10000
 
-echo "Migrating contents of remote time tracking database to development environment..."
-
-SCAN_OUTPUT=$(aws dynamodb scan --table-name "$TABLE" --profile "$SOURCE_PROFILE" --select ALL_ATTRIBUTES --page-size "$PAGE_SIZE" --max-items "$MAX_ITEMS" --output json)
+SCAN_OUTPUT=$(aws dynamodb scan \
+	--table-name "$TABLE" \
+	--profile "$SOURCE_PROFILE" \
+	--select ALL_ATTRIBUTES \
+	--page-size "$PAGE_SIZE" \
+	--max-items "$MAX_ITEMS" \
+	--output json)
 
 if [ $? -eq 0 ]; then
     echo "Successfully retrieved TimeEntries table data from remote DB."
@@ -21,7 +25,11 @@ if [ $? -eq 0 ]; then
         echo "$SCAN_OUTPUT" | jq -c '.Items[]' | while read -r ITEM; do
             ACTIVITY_START_END=$(echo "$ITEM" | jq -r '.activity_start_end.S')
             echo "Transferring item $ACTIVITY_START_END..."
-            aws dynamodb put-item --table-name "$DEST_TABLE" --profile "$DEST_PROFILE" --item "$ITEM" --endpoint-url http://localhost:8000
+            aws dynamodb put-item \
+							--table-name "$DEST_TABLE" \
+							--profile "$DEST_PROFILE" \
+							--item "$ITEM" \
+							--endpoint-url http://localhost:8000
             if [ $? -ne 0 ]; then
                 echo "Failed to transfer item $ACTIVITY_START_END"
             fi
