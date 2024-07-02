@@ -32,9 +32,14 @@ while IFS=, read -r -a arr; do
     
     case $ENVIRONMENT in
         'dev' )
-            aws dynamodb execute-statement --statement "$QUERY" --profile timetracking_dev --endpoint-url http://localhost:8000 ;;
+            aws dynamodb execute-statement \
+							--statement "$QUERY" \
+							--profile timetracking_dev \
+							--endpoint-url http://localhost:8000 ;;
         'prod' )
-            aws dynamodb execute-statement --statement "$QUERY" --profile timetracking_prod ;;
+            aws dynamodb execute-statement \
+							--statement "$QUERY" \
+							--profile timetracking_prod ;;
         *)
             echo "No deployment environment specified" ;;
     esac
