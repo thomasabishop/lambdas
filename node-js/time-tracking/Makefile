@@ -1,4 +1,5 @@
-MIGRATION_SCRIPT=./scripts/migrate_tables.sh
+MIGRATION_SCRIPT=./scripts/migrate.sh
+BACKUP_SCRIPT=./scripts/backup.sh
 
 .PHONY: clean build migrate db-up
 
@@ -19,6 +20,11 @@ db-up:
 migrate: db-up 
 	@echo "Migrating production DB data to local development instance..."
 	@bash $(MIGRATION_SCRIPT) || { echo "Migration failed"; exit 1; }
+
+backup: migrate
+	@echo "Running backup of synchronised development instance..."
+	@bash $(BACKUP_SCRIPT) || { echo "Backup failed"; exit 1; }
+
 
 deploy: 
 	make build && sam deploy	
