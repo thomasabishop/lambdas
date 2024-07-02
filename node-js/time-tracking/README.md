@@ -61,21 +61,19 @@ This table is an instance of the following model:
 
 ### Start local DynamoDB database via Docker
 
-There is a container for two local DynamoDB instances and a local bridging network (`time-tracking_sam-local`) managed via Docker Compose:
+There is a container for a local DynamoDB instance and a bridging network (`time-tracking_sam-local`) managed via Docker Compose:
 
-| Instance | Database name       | Container name              | Port | Purpose                              |
-| -------- | ------------------- | --------------------------- | ---- | ------------------------------------ |
-| `dev`    | `timetracking_dev`  | `timetracking_dynamodb_dev` | 8000 | Breakable local development database |
-| `stage`  | `timetracking_prod` | `timetracking_dynamodb_dev` | 8001 | Clone of current production DB       |
+| Instance | Database name      | Container name              | Port |
+| -------- | ------------------ | --------------------------- | ---- |
+| `dev`    | `timetracking_dev` | `timetracking_dynamodb_dev` | 8000 |
 
-Start up either container:
+Start the container:
 
 ```sh
-docker-compose up dev
-docker-compose up stage
+make db-up
 ```
 
-Or both at once:
+Equivalent to:
 
 ```sh
 docker compose up
@@ -92,11 +90,10 @@ systemctl start docker.service
 
 #### Database endpoints (lambda and CLI differences)
 
-During the runtime of the lambda on the bridging network, the databases are reachable at `http://dev:8000` and `http://stage:8001`.
+During the runtime of the lambda on the bridging network, the database is reachable at `http://dev:8000`.
 
-However, when interacting with the databases via the `aws-cli` the port is the
-same but the hostname is `localhost`, e.g: `http://localhost:8000`,
-`http://localhost:8001`.
+When interacting with the databases via the `aws-cli` the port is the
+same but the hostname is `localhost`, e.g: `http://localhost:8000`.
 
 So it is important to specify the local URL when using the CLI, e.g:
 
@@ -108,11 +105,10 @@ aws dynamodb list-tables \
 
 ### Start API Gateway
 
-For each local DynamoDB instance there is a corresponding command to run the local API Gateway against it:
+Run the local API Gateway server against the Docker instance:
 
 ```sh
-make start-dev
-make start-stage
+make api-start
 ```
 
 This command sources the requisite env vars, starts the SAM container and ensures it is on the same Docker bridging network as the DynamoDB instance, e.g. equivalent to:
@@ -156,7 +152,26 @@ database. It assumes the pre-existence of the databases and tables.
 There is additional infrastructure responsible for creating, seeding, and
 migrating the database and exporting my time entries from the [Timewarrior](https://timewarrior.net/) program I run locally on my machine.
 
-This is managed in the `/scripts` directory...
+The scripts responsible can be found in `/scripts`. They most frequent
+operations are executed via the Makefile:
+
+- `make migrate`
+  - Ensure local database is running, then scan remote database and insert
+    entries into local instance of the `TimeEntries` table.
+- `make backup`
+  - Run migration and then export the updated local database table as JSON to
+    `/backups`
+
+Data is transferred to the remote database twice a day on a cron timer. The
+`upload_daily_entries.py` script exports from TimeWarrior and sends the data to
+the remote database. I also run an export of the week's entries once a week to
+catch any entries that were not captured in the timeframe of the daily uploads.
+
+This script also sends a summary of the upload to a Slack channel via a webhook.
+
+The `export_timewarrior_entries.py` script is responsible for getting the data
+from TimeWarrior and parsing it into a format that can be consumed by the
+database.
 
 ## Environment variables
 
@@ -167,5 +182,5 @@ This is managed in the `/scripts` directory...
 | `ACCESS_KEY`    | Access key ID                                   |
 | `SECRET_KEY`    | Secret access key                               |
 
-`DB_ENDPOINT` is only required when working with the local databass. The region
+`DB_ENDPOINT` is only required when working with the local databases. The region
 and credentials are sufficient to connect to the production database.
