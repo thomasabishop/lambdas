@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 load_dotenv("/home/thomas/.env")
 lambda_endpoint = os.getenv("UPLOAD_DAILY_TIME_ENTRIES_EP")
 slack_notifier_script = "/home/thomas/repos/slack-notifier/src/index.js"
-print(lambda_endpoint)
 
 
 def slack_blocks(summary, entries):
@@ -45,7 +44,7 @@ def slack_blocks(summary, entries):
 
 def post(data, endpoint):
     try:
-        response = requests.post(endpoint, json=data)
+        response = requests.post(endpoint, json=data, timeout=10)
         response.raise_for_status()
     except requests.exceptions.HTTPError as err_http:
         return f"HTTP Error: {err_http}"
@@ -72,7 +71,6 @@ if __name__ == "__main__":
         if daily_entries.stdout:
             data = json.loads(daily_entries.stdout.decode("utf-8"))
             response = post(data, lambda_endpoint)
-            print(response)
             slack_message = slack_blocks(
                 response["data"]["summary"], response["data"]["entries"]
             )
