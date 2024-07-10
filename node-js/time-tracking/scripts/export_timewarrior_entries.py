@@ -57,11 +57,6 @@ def get_entry_duration(utc1, utc2):
     return seconds_to_digital_time(difference_seconds)
 
 
-def active_timer():
-    status = execute_shell_command("timew get dom.active")
-    return True if status == "1" else False
-
-
 def get_tags(tag_list):
     if len(tag_list) > 0:
         return tag_list
@@ -80,40 +75,33 @@ def export_entries(period=None):
     entries = get_tw_entries(period)
 
     for entry in entries:
-        tags = get_tags(entry["tags"])
-        start_iso_stamp = utc_to_iso(entry["start"])
-        end_iso_stamp = utc_to_iso(entry["end"])
-        duration = get_entry_duration(entry["start"], entry["end"])
-        id = "_".join([tags[0], start_iso_stamp, end_iso_stamp])
-        year = extractYear(entry["start"])
-        processed.append(
-            {
-                "activity_start_end": id,
-                "activity_type": tags[0],
-                "start": start_iso_stamp,
-                "end": end_iso_stamp,
-                "duration": duration,
-                "description": tags[1],
-                "year": year,
-            }
-        )
+        # currently running timer will lack this property, so we skip it
+        if "end" in entry:
+            tags = get_tags(entry["tags"])
+            start_iso_stamp = utc_to_iso(entry["start"])
+            end_iso_stamp = utc_to_iso(entry["end"])
+            duration = get_entry_duration(entry["start"], entry["end"])
+            id = "_".join([tags[0], start_iso_stamp, end_iso_stamp])
+            year = extractYear(entry["start"])
+            processed.append(
+                {
+                    "activity_start_end": id,
+                    "activity_type": tags[0],
+                    "start": start_iso_stamp,
+                    "end": end_iso_stamp,
+                    "duration": duration,
+                    "description": tags[1],
+                    "year": year,
+                }
+            )
     return json.dumps(processed)
 
 
 def main():
     period = sys.argv[1] if len(sys.argv) > 1 else None
     try:
-        active = False
-
-        if active_timer():
-            active = True
-            execute_shell_command("timew stop")
-
         export = export_entries(period)
         print(export)
-
-        if active:
-            execute_shell_command("timew continue")
 
     except Exception as e:
         print(f"An error occurred: {e}")

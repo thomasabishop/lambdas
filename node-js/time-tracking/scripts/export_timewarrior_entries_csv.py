@@ -59,11 +59,6 @@ def get_entry_duration(utc1, utc2):
     return seconds_to_digital_time(difference_seconds)
 
 
-def active_timer():
-    status = execute_shell_command("timew get dom.active")
-    return True if status == "1" else False
-
-
 def get_tags(tag_list):
     if len(tag_list) > 0:
         return tag_list
@@ -79,21 +74,22 @@ def export_to_csv(entries):
     with open(filename, mode="w") as export_file:
         writer = csv.writer(export_file)
         for entry in entries:
-            try:
-                csv_row = [
-                    entry.get("activity_start_end", "null"),
-                    entry.get("activity_type", "null"),
-                    entry.get("start", "null"),
-                    entry.get("end", "null"),
-                    entry.get("duration", "null"),
-                    entry.get("description", "null"),
-                    entry.get("year", "null"),
-                ]
-                writer.writerow(csv_row)
+            if "end" in entry:
+                try:
+                    csv_row = [
+                        entry.get("activity_start_end", "null"),
+                        entry.get("activity_type", "null"),
+                        entry.get("start", "null"),
+                        entry.get("end", "null"),
+                        entry.get("duration", "null"),
+                        entry.get("description", "null"),
+                        entry.get("year", "null"),
+                    ]
+                    writer.writerow(csv_row)
             except TypeError:
                 print(f"Error: {TypeError}")
 
-        print(f"Exported time entries to file: {filename}")
+    print(f"Exported time entries to file: {filename}")
 
 
 def get_tw_entries(period):
@@ -134,18 +130,8 @@ def export_entries(period=None):
 
 def main():
     period = sys.argv[1] if len(sys.argv) > 1 else None
-
     try:
-        active = False
-
-        if active_timer():
-            active = True
-            execute_shell_command("timew stop")
-
         export_entries(period)
-
-        if active:
-            execute_shell_command("timew continue")
 
     except Exception as e:
         print(f"An error occurred: {e}")
