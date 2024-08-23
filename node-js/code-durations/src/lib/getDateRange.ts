@@ -5,10 +5,13 @@ const generateDateParameters = (period: string) => {
     const start = new Date()
 
     switch (period) {
+        case "last_2_weeks":
+            start.setMonth(start.getMonth(), start.getDate() - 14)
+            break
         case "last_6_months":
             start.setMonth(start.getMonth() - 6)
             break
-        case "last_year":
+        case "last_12_months":
             start.setFullYear(start.getFullYear() - 1)
             break
         default:
