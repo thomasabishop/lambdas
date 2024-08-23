@@ -9,41 +9,59 @@ const headersAll = {
     "Access-Control-Allow-Origin": "*",
 }
 
+const MAX_RETRIES = 3
+const RETRY_DELAY = 1000
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    try {
-        const timePeriod = event.queryStringParameters?.timePeriod
-        const encodedKey = Buffer.from(WAKATIME_API_KEY as string).toString("base64")
-        const headers: AxiosRequestConfig = {
-            headers: {
-                ...headersAll,
-                Authorization: `Basic ${encodedKey}`,
-            },
-        }
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        try {
+            const timePeriod = event.queryStringParameters?.timePeriod
+            const encodedKey = Buffer.from(WAKATIME_API_KEY as string).toString("base64")
+            const headers: AxiosRequestConfig = {
+                headers: {
+                    ...headersAll,
+                    Authorization: `Basic ${encodedKey}`,
+                },
+            }
 
-        const response: AxiosResponse = await axios.get(
-            `https://wakatime.com/api/v1/users/current/summaries?${getDateRange(timePeriod)}`,
-            headers,
-        )
+            const response: AxiosResponse = await axios.get(
+                `https://wakatime.com/api/v1/users/current/summaries?${getDateRange(timePeriod)}`,
+                headers,
+            )
 
-        const data = parseData(response?.data)
+            const data = parseData(response?.data)
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify({
-                data: data,
-                message: "Successfully retrieved time entries",
-            }),
-            headers: headersAll,
+            return {
+                statusCode: 200,
+                body: JSON.stringify({
+                    data: data,
+                    message: "Successfully retrieved time entries",
+                }),
+                headers: headersAll,
+            }
+        } catch (error) {
+            if (attempt === MAX_RETRIES - 1 || !axios.isAxiosError(error) || error.response!.status < 500) {
+                console.log(error)
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({
+                        message: error instanceof Error ? error.message : "An unknown error occurred",
+                    }),
+                    headers: headersAll,
+                }
+            }
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY))
         }
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
-        console.log(error)
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                message: errorMessage,
-            }),
-            headers: headersAll,
-        }
+    }
+    throw new Error("Unexpected: Max retries reached without returning")
+}
+
+function handleError(error: unknown): APIGatewayProxyResult {
+    console.error(error)
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
+    return {
+        statusCode: 500,
+        body: JSON.stringify({ message: errorMessage }),
+        headers: headersAll,
     }
 }
