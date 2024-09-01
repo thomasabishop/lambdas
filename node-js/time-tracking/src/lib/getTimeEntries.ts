@@ -18,7 +18,7 @@ const getTimeEntries = async (
 ): Promise<ITimeEntry[]> => {
    const documentClient = DynamoDBDocumentClient.from(client)
    const dateParams = generateDates()[timePeriod]
-
+   console.log(dateParams)
    const params = {
       TableName: "TimeEntries",
       IndexName: "YearIndex",
