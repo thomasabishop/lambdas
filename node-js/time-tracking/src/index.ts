@@ -10,8 +10,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       switch (event?.httpMethod) {
          case "GET":
             if (event.resource === "/fetch") {
-               const timePeriod = event?.queryStringParameters?.period as TPeriod
-               const timeEntries = await getTimeEntries(client, timePeriod)
+               const timeEntries = await getTimeEntries(client, "month")
                return buildHttpResponse(200, timeEntries)
             } else {
                return buildHttpResponse(404, "Resource not found")
