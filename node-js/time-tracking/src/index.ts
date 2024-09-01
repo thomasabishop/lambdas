@@ -4,17 +4,15 @@ import { addTimeEntries } from "./lib/addTimeEntries"
 import { buildHttpResponse } from "./lib/buildHttpResponse"
 import { client } from "./lib/connect"
 import { TPeriod } from "./lib/generateDates"
-import { getYearEntries } from "./lib/getYearEntries"
+
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
    try {
       switch (event?.httpMethod) {
          case "GET":
             if (event.resource === "/fetch") {
-               // const timePeriod = event?.queryStringParameters?.period as TPeriod
-               //		const timeEntries = await getTimeEntries(client, timePeriod)
-               const yearEntries = await getYearEntries(client)
-               return buildHttpResponse(200, yearEntries)
-               // return buildHttpResponse(200, timeEntries)
+               const timePeriod = event?.queryStringParameters?.period as TPeriod
+               const timeEntries = await getTimeEntries(client, timePeriod)
+               return buildHttpResponse(200, timeEntries)
             } else {
                return buildHttpResponse(404, "Resource not found")
             }
