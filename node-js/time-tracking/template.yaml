@@ -22,10 +22,20 @@ Resources:
       Architectures:
         - x86_64
       Events:
-        Fetch:
+        Month:
           Type: Api
           Properties:
-            Path: /fetch
+            Path: /month
+            Method: get
+        Count:
+          Type: Api
+          Properties:
+            Path: /count
+            Method: get
+        Date:
+          Type: Api
+          Properties:
+            Path: /date
             Method: get
         Update:
           Type: Api

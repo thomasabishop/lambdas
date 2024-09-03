@@ -2,7 +2,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { BatchWriteCommand, DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb"
 import Joi from "joi"
 import { buildHttpResponse } from "./buildHttpResponse"
-import { ITimeEntry } from "./getTimeEntries"
+import { ITimeEntry } from "../types/types"
 const isoDateTimeFormat = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/
 
 const schema = Joi.array().items({

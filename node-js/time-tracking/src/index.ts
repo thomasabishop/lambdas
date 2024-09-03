@@ -1,16 +1,24 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import { ITimeEntry, getTimeEntries } from "./lib/getTimeEntries"
+import { getTimeEntries } from "./lib/getTimeEntries"
 import { addTimeEntries } from "./lib/addTimeEntries"
 import { buildHttpResponse } from "./lib/buildHttpResponse"
 import { client } from "./lib/connect"
-import { TPeriod } from "./lib/generateDates"
-
+import { getYearCount } from "./lib/getYearCount"
+import { getEntriesForDate } from "./lib/getEntriesForDate"
+import { ITimeEntry } from "./types/types"
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
    try {
       switch (event?.httpMethod) {
          case "GET":
-            if (event.resource === "/fetch") {
-               const timeEntries = await getTimeEntries(client, "month")
+            if (event.resource === "/month") {
+               const monthEntries = await getTimeEntries(client, "month")
+               return buildHttpResponse(200, monthEntries)
+            } else if (event.resource === "/count") {
+               const count = await getYearCount(client)
+               return buildHttpResponse(200, count)
+            } else if (event.resource === "/date") {
+               const date = event?.queryStringParameters?.date
+               const timeEntries = await getEntriesForDate(client, date as string)
                return buildHttpResponse(200, timeEntries)
             } else {
                return buildHttpResponse(404, "Resource not found")
