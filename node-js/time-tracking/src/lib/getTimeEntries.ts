@@ -1,23 +1,29 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, QueryCommand } from "@aws-sdk/lib-dynamodb"
 import { generateDates, TPeriod } from "./generateDates"
-
-interface ITimeEntry {
-   activity_start_end: string
-   year: string
-   start: string
-   end: string
-   activity_type: string
-   duration: number
-   description: string
-}
+import { ITimeEntry } from "../types/types"
 
 const getTimeEntries = async (
    client: DynamoDBClient,
-   timePeriod: TPeriod,
+   timePeriod: TPeriod | null,
+   singleDay?: string,
 ): Promise<ITimeEntry[]> => {
    const documentClient = DynamoDBDocumentClient.from(client)
-   const dateParams = generateDates()[timePeriod]
+   let dateParams
+
+   if (!singleDay && timePeriod) {
+      dateParams = generateDates()[timePeriod]
+   } else {
+      const startTime = new Date(`${singleDay} 12:00`)
+      const endTime = new Date(`${singleDay} 23:00`)
+      dateParams = {
+         start: startTime.toISOString(),
+         end: endTime.toISOString(),
+         year: startTime.getFullYear().toString(),
+      }
+   }
+
+   console.log(dateParams)
 
    const params = {
       TableName: "TimeEntries",
@@ -39,4 +45,4 @@ const getTimeEntries = async (
    return (response?.Items as ITimeEntry[]) || []
 }
 
-export { getTimeEntries, ITimeEntry }
+export { getTimeEntries }
